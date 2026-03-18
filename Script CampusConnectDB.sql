@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS CampusConnectoDB;
+CREATE DATABASE IF NOT EXISTS CampusConnectDB;
+USE CampusConnectDB;
