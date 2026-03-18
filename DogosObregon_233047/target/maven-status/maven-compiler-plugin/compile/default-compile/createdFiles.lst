@@ -1,0 +1,7 @@
+models\HotDog.class
+models\Cliente.class
+models\PedidoDetalle.class
+com\mycompany\dogosobregon_233047\DogosObregon_233047.class
+models\MetodoPago.class
+models\Pedido.class
+models\Direccion.class
