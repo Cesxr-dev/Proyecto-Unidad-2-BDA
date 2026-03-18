@@ -1,5 +1,5 @@
-com\campusconnect\entities\Interes.class
 com\campusconnect\Main.class
-com\campusconnect\entities\Perfil.class
-com\campusconnect\entities\MatchEntity.class
-com\campusconnect\entities\Mensaje.class
+com\campusconnect\models\MatchEntity.class
+com\campusconnect\models\Mensaje.class
+com\campusconnect\models\Interes.class
+com\campusconnect\models\Perfil.class
