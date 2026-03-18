@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "matches")
-public class MatchEntity {
+public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class MatchEntity {
     @OneToMany(mappedBy = "matchEntity", cascade = CascadeType.ALL)
     private List<Mensaje> mensajes;
 
-    public MatchEntity() {}
+    public Match() {}
 
     public Long getIdMatch() {
         return idMatch;

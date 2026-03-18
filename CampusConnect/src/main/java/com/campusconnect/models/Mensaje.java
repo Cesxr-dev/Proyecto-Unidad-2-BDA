@@ -15,12 +15,12 @@ public class Mensaje {
     @Column(name = "cuerpo", columnDefinition = "TEXT")
     private String cuerpo;
 
-    @Column(name = "fecha_y_hora_de_envio")
+    @Column(name = "fechahora_envio")
     private LocalDateTime fechaHoraEnvio;
 
     @ManyToOne
     @JoinColumn(name = "id_match", nullable = false)
-    private MatchEntity matchEntity;
+    private Match matchEntity;
 
     @ManyToOne
     @JoinColumn(name = "id_remitente", nullable = false)
@@ -56,11 +56,11 @@ public class Mensaje {
         this.fechaHoraEnvio = fechaHoraEnvio;
     }
 
-    public MatchEntity getMatchEntity() {
+    public Match getMatchEntity() {
         return matchEntity;
     }
 
-    public void setMatchEntity(MatchEntity matchEntity) {
+    public void setMatchEntity(Match matchEntity) {
         this.matchEntity = matchEntity;
     }
 

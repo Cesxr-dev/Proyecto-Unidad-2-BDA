@@ -12,7 +12,7 @@ public class Interes {
     @Column(name = "id_interes")
     private Long idInteres;
 
-    @Column(name = "nombre_del_interes", nullable = false)
+    @Column(name = "nombre_interes", nullable = false)
     private String nombre;
 
     @ManyToMany(mappedBy = "intereses")
