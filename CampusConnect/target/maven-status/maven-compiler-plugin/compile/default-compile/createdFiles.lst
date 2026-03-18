@@ -1,1 +1,5 @@
-CampusConnect.class
+com\campusconnect\entities\Interes.class
+com\campusconnect\Main.class
+com\campusconnect\entities\Perfil.class
+com\campusconnect\entities\MatchEntity.class
+com\campusconnect\entities\Mensaje.class
