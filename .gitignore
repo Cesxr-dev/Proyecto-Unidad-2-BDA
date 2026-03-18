@@ -1,1 +1,3 @@
 CampusConnect/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+CampusConnect/target/classes/META-INF/persistence.xml
+CampusConnect/src/main/resources/META-INF/persistence.xml
