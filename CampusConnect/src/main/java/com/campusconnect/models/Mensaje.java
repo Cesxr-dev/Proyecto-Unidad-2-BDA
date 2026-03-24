@@ -1,51 +1,63 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.campusconnect.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ *
+ * @author demib
+ */
 @Entity
-@Table(name = "mensajes")
-public class Mensaje {
+public class Mensaje implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_mensaje")
-    private Long idMensaje;
+    @Column(name = "mensaje_id")
+    private Long id;
 
-    @Column(name = "cuerpo", columnDefinition = "TEXT")
-    private String cuerpo;
-
-    @Column(name = "fechahora_envio")
+    @Column(name = "fecha_hora_envio", nullable = false)
     private LocalDateTime fechaHoraEnvio;
-
+    
+    //RELACION CON MATCH
+    
     @ManyToOne
-    @JoinColumn(name = "id_match", nullable = false)
-    private Match matchEntity;
-
+    @JoinColumn(name = "match_id", nullable = false)
+    private Match match;
+    
+    //RELACION CON PERFIL
+    
     @ManyToOne
-    @JoinColumn(name = "id_remitente", nullable = false)
-    private Perfil remitente;
+    @JoinColumn(name = "perfil_emisor_id", nullable = false)
+    private Perfil perfilEmisor;
 
-    @ManyToOne
-    @JoinColumn(name = "id_receptor", nullable = false)
-    private Perfil receptor;
-
-    public Mensaje() {}
-
-    public Long getIdMensaje() {
-        return idMensaje;
+    public Mensaje() {
     }
 
-    public void setIdMensaje(Long idMensaje) {
-        this.idMensaje = idMensaje;
+    public Mensaje(Long id, LocalDateTime fechaHoraEnvio, Match match, Perfil perfilEmisor) {
+        this.id = id;
+        this.fechaHoraEnvio = fechaHoraEnvio;
+        this.match = match;
+        this.perfilEmisor = perfilEmisor;
     }
 
-    public String getCuerpo() {
-        return cuerpo;
+    public Long getId() {
+        return id;
     }
 
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDateTime getFechaHoraEnvio() {
@@ -56,29 +68,26 @@ public class Mensaje {
         this.fechaHoraEnvio = fechaHoraEnvio;
     }
 
-    public Match getMatchEntity() {
-        return matchEntity;
+    public Match getMatch() {
+        return match;
     }
 
-    public void setMatchEntity(Match matchEntity) {
-        this.matchEntity = matchEntity;
+    public void setMatch(Match match) {
+        this.match = match;
     }
 
-    public Perfil getRemitente() {
-        return remitente;
+    public Perfil getPerfilEmisor() {
+        return perfilEmisor;
     }
 
-    public void setRemitente(Perfil remitente) {
-        this.remitente = remitente;
+    public void setPerfilEmisor(Perfil perfilEmisor) {
+        this.perfilEmisor = perfilEmisor;
     }
-
-    public Perfil getReceptor() {
-        return receptor;
-    }
-
-    public void setReceptor(Perfil receptor) {
-        this.receptor = receptor;
-    }
-
+    
+    
+    
+    
+    
+    
     
 }

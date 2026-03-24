@@ -1,83 +1,109 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.campusconnect.models;
 
-import jakarta.persistence.*;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Set;
 
+/**
+ *
+ * @author demib
+ */
 @Entity
 @Table(name = "matches")
-public class Match {
+public class Match implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_match")
-    private Long idMatch;
+    @Column(name = "match_id")
+    private Long id;
+    
+    @Column(name = "fecha_match", nullable = false)
+    private LocalDate fechaMatch;
+    
+    //Relacion con LIKE
+    @OneToOne
+    @JoinColumn(name = "like_a", nullable = false)
+    private Like likeA;
+    
+    @OneToOne
+    @JoinColumn(name = "like_b", nullable = false)
+    private Like likeB;
+    
+    
 
-    @ManyToOne
-    @JoinColumn(name = "id_perfil_a", nullable = false)
-    private Perfil perfilA;
+    //RELACION 1:n CON MENSAJE
+    
+    @OneToMany(mappedBy = "match")
+    private Set<Mensaje> mensajes;
 
-    @ManyToOne
-    @JoinColumn(name = "id_perfil_b", nullable = false)
-    private Perfil perfilB;
-
-    @Column(name = "reaccion_perfil_a")
-    private String reaccionPerfilA;
-
-    @Column(name = "reaccion_perfil_b")
-    private String reaccionPerfilB;
-
-    @OneToMany(mappedBy = "matchEntity", cascade = CascadeType.ALL)
-    private List<Mensaje> mensajes;
-
-    public Match() {}
-
-    public Long getIdMatch() {
-        return idMatch;
+    public Match() {
     }
 
-    public void setIdMatch(Long idMatch) {
-        this.idMatch = idMatch;
-    }
-
-    public Perfil getPerfilA() {
-        return perfilA;
-    }
-
-    public void setPerfilA(Perfil perfilA) {
-        this.perfilA = perfilA;
-    }
-
-    public Perfil getPerfilB() {
-        return perfilB;
-    }
-
-    public void setPerfilB(Perfil perfilB) {
-        this.perfilB = perfilB;
-    }
-
-    public String getReaccionPerfilA() {
-        return reaccionPerfilA;
-    }
-
-    public void setReaccionPerfilA(String reaccionPerfilA) {
-        this.reaccionPerfilA = reaccionPerfilA;
-    }
-
-    public String getReaccionPerfilB() {
-        return reaccionPerfilB;
-    }
-
-    public void setReaccionPerfilB(String reaccionPerfilB) {
-        this.reaccionPerfilB = reaccionPerfilB;
-    }
-
-    public List<Mensaje> getMensajes() {
-        return mensajes;
-    }
-
-    public void setMensajes(List<Mensaje> mensajes) {
+    public Match(Long id, LocalDate fechaMatch, Like likeA, Like likeB, Set<Mensaje> mensajes) {
+        this.id = id;
+        this.fechaMatch = fechaMatch;
+        this.likeA = likeA;
+        this.likeB = likeB;
         this.mensajes = mensajes;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getFechaMatch() {
+        return fechaMatch;
+    }
+
+    public void setFechaMatch(LocalDate fechaMatch) {
+        this.fechaMatch = fechaMatch;
+    }
+
+    public Like getLikeA() {
+        return likeA;
+    }
+
+    public void setLikeA(Like likeA) {
+        this.likeA = likeA;
+    }
+
+    public Like getLikeB() {
+        return likeB;
+    }
+
+    public void setLikeB(Like likeB) {
+        this.likeB = likeB;
+    }
+
+    public Set<Mensaje> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(Set<Mensaje> mensajes) {
+        this.mensajes = mensajes;
+    }
+
+    
+    
+    
     
 }

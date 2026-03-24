@@ -3,23 +3,24 @@ package com.campusconnect.models;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "perfiles")
 public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_perfil")
-    private Long idPerfil;
+    @Column(name = "perfil_id")
+    private Long id;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "carrera")
-    private String carrera;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Carrera carrera;
 
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "fecha_nacimiento",nullable = false)
     private LocalDate fechaNacimiento;
 
     @Column(name = "correo_institucional", nullable = false, unique = true)
@@ -30,23 +31,58 @@ public class Perfil {
 
     @Column(name = "foto_perfil")
     private String fotoPerfil;
+    
+    //Relacion N:M sin atributos con infoAdicional
 
     @ManyToMany
     @JoinTable(
-        name = "cuenta",
-        joinColumns = @JoinColumn(name = "id_perfil"),
-        inverseJoinColumns = @JoinColumn(name = "id_interes")
+            
+        name = "perfil_info_adicional",
+        joinColumns = @JoinColumn(name = "perfil_id", nullable = false),
+        inverseJoinColumns = @JoinColumn(name = "info_adicional_id", nullable = false)
     )
-    private List<Interes> intereses;
+    private List<InfoAdicional> perfilInfoAdicional;
+    
+    //Relacion 1:n con Like
+    
+    @OneToMany(mappedBy = "perfilOrigen")
+    private Set<Like> likesEnviados;
+    
+    @OneToMany(mappedBy = "perfilDestino")
+    private Set<Like> likesRecibidos;
+    
+    
 
-    public Perfil() {}
+    //Relacion 1:n con Mensajes
+    
+    @OneToMany(mappedBy = "perfilEmisor")
+    private Set<Mensaje> mensajes;
 
-    public Long getIdPerfil() {
-        return idPerfil;
+    public Perfil() {
     }
 
-    public void setIdPerfil(Long idPerfil) {
-        this.idPerfil = idPerfil;
+    public Perfil(Long id, String nombre, Carrera carrera, LocalDate fechaNacimiento, String correoInstitucional, String contrasena, String fotoPerfil, List<InfoAdicional> perfilInfoAdicional, Set<Like> likesEnviados, Set<Like> likesRecibidos, Set<Mensaje> mensajes) {
+        this.id = id;
+        this.nombre = nombre;
+        this.carrera = carrera;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correoInstitucional = correoInstitucional;
+        this.contrasena = contrasena;
+        this.fotoPerfil = fotoPerfil;
+        this.perfilInfoAdicional = perfilInfoAdicional;
+        this.likesEnviados = likesEnviados;
+        this.likesRecibidos = likesRecibidos;
+        this.mensajes = mensajes;
+    }
+    
+    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -57,11 +93,11 @@ public class Perfil {
         this.nombre = nombre;
     }
 
-    public String getCarrera() {
+    public Carrera getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(String carrera) {
+    public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
 
@@ -97,13 +133,50 @@ public class Perfil {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public List<Interes> getIntereses() {
-        return intereses;
+    public List<InfoAdicional> getPerfilInfoAdicional() {
+        return perfilInfoAdicional;
     }
 
-    public void setIntereses(List<Interes> intereses) {
-        this.intereses = intereses;
+    public void setPerfilInfoAdicional(List<InfoAdicional> perfilInfoAdicional) {
+        this.perfilInfoAdicional = perfilInfoAdicional;
     }
+
+    public Set<Like> getLikesEnviados() {
+        return likesEnviados;
+    }
+
+    public void setLikesEnviados(Set<Like> likesEnviados) {
+        this.likesEnviados = likesEnviados;
+    }
+
+    public Set<Like> getLikesRecibidos() {
+        return likesRecibidos;
+    }
+
+    public void setLikesRecibidos(Set<Like> likesRecibidos) {
+        this.likesRecibidos = likesRecibidos;
+    }
+
+    public Set<Mensaje> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(Set<Mensaje> mensajes) {
+        this.mensajes = mensajes;
+    }
+
+    
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
 
     
 }

@@ -1,5 +1,9 @@
-com\campusconnect\Main.class
+com\campusconnect\models\EstadoLike.class
+com\campusconnect\models\Like.class
 com\campusconnect\models\Match.class
+com\campusconnect\models\TipoInfo.class
+com\campusconnect\Main.class
+com\campusconnect\models\InfoAdicional.class
+com\campusconnect\models\Carrera.class
 com\campusconnect\models\Mensaje.class
-com\campusconnect\models\Interes.class
 com\campusconnect\models\Perfil.class
