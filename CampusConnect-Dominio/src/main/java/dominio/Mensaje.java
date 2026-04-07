@@ -25,6 +25,9 @@ public class Mensaje implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mensaje_id")
     private Long id;
+    
+    @Column(name = "contenido", nullable = false, length = 1500)
+    private String contenido;
 
     @Column(name = "fecha_hora_envio", nullable = false)
     private LocalDateTime fechaHoraEnvio;
@@ -42,8 +45,10 @@ public class Mensaje implements Serializable {
     public Mensaje() {
     }
 
-    public Mensaje(Long id, LocalDateTime fechaHoraEnvio, Match match, Perfil perfilEmisor) {
+    public Mensaje(Long id, String contenido, LocalDateTime fechaHoraEnvio, 
+            Match match, Perfil perfilEmisor) {
         this.id = id;
+        this.contenido = contenido;
         this.fechaHoraEnvio = fechaHoraEnvio;
         this.match = match;
         this.perfilEmisor = perfilEmisor;
@@ -56,6 +61,13 @@ public class Mensaje implements Serializable {
         this.id = id;
     }
 
+    public String getContenido() {
+        return contenido;
+    }
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+    
     public LocalDateTime getFechaHoraEnvio() {
         return fechaHoraEnvio;
     }

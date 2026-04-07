@@ -24,7 +24,7 @@ public class InfoAdicional implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "info_adicional_id")
+    @Column(name = "info_id")
     private Long id;
     
     @Enumerated(EnumType.STRING)
