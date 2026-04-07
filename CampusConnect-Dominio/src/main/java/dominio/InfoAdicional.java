@@ -34,7 +34,7 @@ public class InfoAdicional implements Serializable {
     @Column(nullable = false, length = 50)
     private String nombre;
     
-    //Relacion M:N con perfiles
+    // Relacion M:N con perfiles
     @ManyToMany(mappedBy = "info_adicional")
     private Set<Perfil> perfiles;
 
