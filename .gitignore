@@ -3,3 +3,4 @@ CampusConnect/target/classes/META-INF/persistence.xml
 CampusConnect/src/main/resources/META-INF/persistence.xml
 /CampusConnect-Dominio/target/
 /CampusConnect-Persistencia/target/
+/CampusConnect-Servicios/target/
