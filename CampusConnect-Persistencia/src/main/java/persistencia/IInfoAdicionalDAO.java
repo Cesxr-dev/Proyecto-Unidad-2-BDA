@@ -9,16 +9,8 @@ import java.util.List;
  *
  * @author Equipo 2 - "Azul"
  */
-public interface IInfoAdicionalDAO {
+public interface IInfoAdicionalDAO extends IGenericoDAO<InfoAdicional, Long>{
     
-    boolean crear(InfoAdicional infoAdicional, EntityManager em);
     
-    InfoAdicional buscarPorId(int idInfo, EntityManager em);
-    
-    List<InfoAdicional> listar(EntityManager em);
-    
-    boolean actualizar(InfoAdicional infoAdicional, EntityManager em);
-    
-    boolean eliminar(Long id, EntityManager em);
     
 }
