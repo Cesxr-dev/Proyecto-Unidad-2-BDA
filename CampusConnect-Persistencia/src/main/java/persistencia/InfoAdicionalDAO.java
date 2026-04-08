@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  *
- * @author Jesús Pedro Lares Valencia - 00000233383
+ * @author Equipo 2 - "Azul"
  */
 public class InfoAdicionalDAO implements IInfoAdicionalDAO {
 
