@@ -2,8 +2,6 @@
 package persistencia;
 
 import dominio.InfoAdicional;
-import jakarta.persistence.EntityManager;
-import java.util.List;
 
 /**
  *
