@@ -32,7 +32,7 @@ public class Perfil implements Serializable {
     private String fotoPerfil;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "carrera", nullable = false)
     private Carrera carrera;
 
     @Column(name = "correo_institucional", nullable = false, length = 50)
