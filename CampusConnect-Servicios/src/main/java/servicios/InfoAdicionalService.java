@@ -60,7 +60,7 @@ public class InfoAdicionalService implements IInfoAdicionalService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public void validarInfoAdicional(InfoAdicional infoAdicional) {
+    private void validarInfoAdicional(InfoAdicional infoAdicional) {
         if (infoAdicional == null) {
             throw new IllegalArgumentException("La informacion adicional no puede ser nula.");
         }
