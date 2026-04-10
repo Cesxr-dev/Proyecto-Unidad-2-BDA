@@ -2,10 +2,12 @@
 package servicios;
 
 import dominio.Perfil;
+import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 import persistencia.IPerfilDAO;
 import persistencia.PerfilDAO;
+import utils.JPAUtil;
 
 /**
  *
@@ -21,7 +23,22 @@ public class PerfilService implements IPerfilService {
 
     @Override
     public void guardar(Perfil perfil) {
+        validarPerfil(perfil);
         
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction();
+            perfilDao.guardar(perfil, em);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.print("Error al guardar el perfil.");
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -64,11 +81,27 @@ public class PerfilService implements IPerfilService {
             throw new IllegalArgumentException("La edad minima de registro es de 16 años.");
         }
         
-        // Validación de carrera
+        //  Validación de carrera
         if (perfil.getCarrera() == null || perfil.getCarrera().getNombre().trim().isBlank()) {
             throw new IllegalArgumentException("La carrera del perfil es obligatoria");
         }
         
+        //  Validación de correo institucional
+        if (perfil.getCorreoInstitucional() == null || perfil.getCorreoInstitucional()
+                .trim().isBlank()) {
+            throw new IllegalArgumentException("El correo institucional del "
+                    + "perfil es obligatorio");
+        }
+        
+        //  Validación de contraseña
+        if (perfil.getContrasena() == null || perfil.getContrasena().trim().isBlank()) {
+            throw new IllegalArgumentException("La contrasena del perfil es obligatoria");
+        }
+        
+        //  Validación de información adicional
+        if (perfil.getPerfilInfoAdicional() == null || perfil.getPerfilInfoAdicional().isEmpty()) {
+            throw new IllegalArgumentException("La informacion adicional del perfil es obligatoria");
+        }
         
     }
     
