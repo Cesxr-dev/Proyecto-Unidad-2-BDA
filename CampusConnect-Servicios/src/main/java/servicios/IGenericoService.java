@@ -13,7 +13,7 @@ public interface IGenericoService<T, ID> {
     
     void actualizar(T entidad);
     
-    void eliminar(T entidad);
+    void eliminar(ID id);
     
     T buscarPorId(ID id);
     
