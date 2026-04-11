@@ -53,7 +53,7 @@ public class InfoAdicionalService implements IInfoAdicionalService {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            System.err.print("Error al actualizar la información adicional.");
+            System.err.print("Error al actualizar la informacion adicional.");
             throw e;
         } finally {
             em.close();
@@ -62,7 +62,20 @@ public class InfoAdicionalService implements IInfoAdicionalService {
 
     @Override
     public void eliminar(Long id) {
-        
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            infoAdicionalDao.eliminar(id, em);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.print("Error al eliminar la informacion adicional.");
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
