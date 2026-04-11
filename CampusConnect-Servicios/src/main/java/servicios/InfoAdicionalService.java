@@ -61,8 +61,8 @@ public class InfoAdicionalService implements IInfoAdicionalService {
     }
 
     @Override
-    public void eliminar(InfoAdicional entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminar(Long id) {
+        
     }
 
     @Override

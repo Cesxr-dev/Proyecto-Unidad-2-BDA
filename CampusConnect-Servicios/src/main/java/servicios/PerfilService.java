@@ -62,7 +62,7 @@ public class PerfilService implements IPerfilService {
     }
 
     @Override
-    public void eliminar(Perfil entidad) {
+    public void eliminar(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
