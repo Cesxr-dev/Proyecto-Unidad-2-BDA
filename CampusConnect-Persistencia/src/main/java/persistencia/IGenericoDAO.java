@@ -14,7 +14,7 @@ public interface IGenericoDAO<T, ID> {
     
     void actualizar(T entidad, EntityManager em);
     
-    void eliminar(T entidad, EntityManager em);
+    void eliminar(ID id, EntityManager em);
     
     T buscarPorId(ID id, EntityManager em);
     

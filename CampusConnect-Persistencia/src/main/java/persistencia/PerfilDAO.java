@@ -22,8 +22,11 @@ public class PerfilDAO implements IPerfilDAO {
     }
 
     @Override
-    public void eliminar(Perfil entidad, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminar(Long id, EntityManager em) {
+        Perfil perfil = em.find(Perfil.class, id);
+        if (perfil != null) {
+            em.remove(perfil);
+        }
     }
 
     @Override

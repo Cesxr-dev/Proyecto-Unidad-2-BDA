@@ -22,8 +22,11 @@ public class InfoAdicionalDAO implements IInfoAdicionalDAO {
     }
 
     @Override
-    public void eliminar(InfoAdicional entidad, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminar(Long id, EntityManager em) {
+        InfoAdicional infoAdicional = em.find(InfoAdicional.class, id);
+        if (infoAdicional != null) {
+            em.remove(infoAdicional);
+        }
     }
 
     @Override
