@@ -26,7 +26,7 @@ public class InfoAdicionalService implements IInfoAdicionalService {
         
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            em.getTransaction();
+            em.getTransaction().begin();
             infoAdicionalDao.guardar(infoAdicional, em);
             em.getTransaction().commit();   
         } catch (Exception e) {

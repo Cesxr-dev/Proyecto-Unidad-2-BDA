@@ -27,7 +27,7 @@ public class PerfilService implements IPerfilService {
         
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            em.getTransaction();
+            em.getTransaction().begin();
             perfilDao.guardar(perfil, em);
             em.getTransaction().commit();
         } catch (Exception e) {

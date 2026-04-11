@@ -46,9 +46,9 @@ public class Like implements Serializable {
     private Perfil perfilDestino;
 
     // Relación 1:1 con Match
-    @OneToOne(mappedBy = "like_a")
+    @OneToOne(mappedBy = "likeA")
     private Match matchLikeA;
-    @OneToOne(mappedBy = "like_b")
+    @OneToOne(mappedBy = "likeB")
     private Match matchLikeB;
 
     public Like() {
