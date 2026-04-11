@@ -41,8 +41,23 @@ public class InfoAdicionalService implements IInfoAdicionalService {
     }
 
     @Override
-    public void actualizar(InfoAdicional entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void actualizar(InfoAdicional infoAdicional) {
+        validarInfoAdicional(infoAdicional);
+        
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            infoAdicionalDao.actualizar(infoAdicional, em);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.print("Error al actualizar la información adicional.");
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override

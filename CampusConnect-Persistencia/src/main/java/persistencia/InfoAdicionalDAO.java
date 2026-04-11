@@ -17,8 +17,8 @@ public class InfoAdicionalDAO implements IInfoAdicionalDAO {
     }
 
     @Override
-    public void actualizar(InfoAdicional entidad, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void actualizar(InfoAdicional infoAdicional, EntityManager em) {
+        em.merge(infoAdicional);
     }
 
     @Override
