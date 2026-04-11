@@ -48,7 +48,7 @@ public class Perfil implements Serializable {
         joinColumns = @JoinColumn(name = "perfil_id", nullable = false),
         inverseJoinColumns = @JoinColumn(name = "info_adicional_id", nullable = false)
     )
-    private List<InfoAdicional> perfilInfoAdicional;
+    private Set<InfoAdicional> perfilInfoAdicional;
     
     //Relacion 1:N con Like
     @OneToMany(mappedBy = "perfilOrigen")
@@ -65,7 +65,7 @@ public class Perfil implements Serializable {
 
     public Perfil(Long id, String nombre, LocalDate fechaNacimiento, 
             String fotoPerfil, Carrera carrera, String correoInstitucional, 
-            String contrasena, List<InfoAdicional> perfilInfoAdicional, 
+            String contrasena, Set<InfoAdicional> perfilInfoAdicional, 
             Set<Like> likesEnviados, Set<Like> likesRecibidos, Set<Mensaje> mensajes) {
         this.id = id;
         this.nombre = nombre;
@@ -129,10 +129,10 @@ public class Perfil implements Serializable {
         this.contrasena = contrasena;
     }
 
-    public List<InfoAdicional> getPerfilInfoAdicional() {
+    public Set<InfoAdicional> getPerfilInfoAdicional() {
         return perfilInfoAdicional;
     }
-    public void setPerfilInfoAdicional(List<InfoAdicional> perfilInfoAdicional) {
+    public void setPerfilInfoAdicional(Set<InfoAdicional> perfilInfoAdicional) {
         this.perfilInfoAdicional = perfilInfoAdicional;
     }
 
