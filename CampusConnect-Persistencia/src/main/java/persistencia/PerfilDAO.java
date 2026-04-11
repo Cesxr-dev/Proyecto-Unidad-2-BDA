@@ -17,8 +17,8 @@ public class PerfilDAO implements IPerfilDAO {
     }
 
     @Override
-    public void actualizar(Perfil entidad, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void actualizar(Perfil perfil, EntityManager em) {
+        em.merge(perfil);
     }
 
     @Override

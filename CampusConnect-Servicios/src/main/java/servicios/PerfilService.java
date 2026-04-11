@@ -42,8 +42,23 @@ public class PerfilService implements IPerfilService {
     }
 
     @Override
-    public void actualizar(Perfil entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void actualizar(Perfil perfil) {
+        validarPerfil(perfil);
+        
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            perfilDao.actualizar(perfil, em);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.print("Error al guardar el perfil.");
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
