@@ -32,15 +32,15 @@ public class PnlFoto extends JPanel {
         setMinimumSize(size);
         setMaximumSize(size);
 
-        setLayout(new BorderLayout()); // 👈 importante
+        setLayout(new BorderLayout());
 
         foto = new PanelImagenCircular();
-        foto.setPreferredSize(new Dimension(100, 100)); // tamaño del círculo
+        foto.setPreferredSize(new Dimension(100, 100)); // tamaño del circulo
         foto.setOpaque(false);
         add(foto, BorderLayout.CENTER);
     }
 
-    // método para cambiar la imagen desde fuera
+    // metodo para cambiar la imagen desde fuera
     public void setImagen(String ruta) {
         foto.setImagen(ruta);
     }
