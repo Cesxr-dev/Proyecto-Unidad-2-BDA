@@ -54,7 +54,7 @@ public class PerfilService implements IPerfilService {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            System.err.print("Error al guardar el perfil.");
+            System.err.print("Error al actualizar el perfil.");
             throw e;
         } finally {
             em.close();
@@ -63,7 +63,20 @@ public class PerfilService implements IPerfilService {
 
     @Override
     public void eliminar(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            perfilDao.eliminar(id, em);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.print("Error al eliminar el perfil.");
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
