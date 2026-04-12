@@ -6,3 +6,5 @@ CampusConnect/src/main/resources/META-INF/persistence.xml
 /CampusConnect-Servicios/target/
 /CampusConnect-Utils/target/
 /CampusConnect-Presentacion/target/
+CampusConnect-Utils/src/main/resources/META-INF/persistence.xml
+CampusConnect-Utils/src/main/resources/META-INF/persistence.xml
