@@ -2,6 +2,7 @@
 package presentacion.registroPanel;
 
 import dominio.Carrera;
+import dominio.Perfil;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -116,17 +117,17 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
         pnlBottom.setLayout(pnlBottomLayout);
         pnlBottomLayout.setHorizontalGroup(
             pnlBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBottomLayout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+            .addGroup(pnlBottomLayout.createSequentialGroup()
+                .addGap(124, 124, 124)
                 .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         pnlBottomLayout.setVerticalGroup(
             pnlBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBottomLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlBottom, java.awt.BorderLayout.SOUTH);
@@ -136,6 +137,9 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
+        //Falta hacer validaciones en pnlCampos y despues manejarla aqui con true or false
+        
+        Perfil perfil = pnlCampos.obtenerDatos();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     public static void main(String args[]) {
