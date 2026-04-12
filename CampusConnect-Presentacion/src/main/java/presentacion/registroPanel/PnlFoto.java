@@ -7,9 +7,11 @@ package presentacion.registroPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import presentacion.PanelImagenCircular;
 
 /**
  *
@@ -18,6 +20,8 @@ import presentacion.PanelImagenCircular;
 public class PnlFoto extends JPanel {
 
     private PanelImagenCircular foto;
+    
+    private String rutaImagen;
 
     public PnlFoto() {
         inicializar();
@@ -38,10 +42,43 @@ public class PnlFoto extends JPanel {
         foto.setPreferredSize(new Dimension(100, 100)); // tamaño del circulo
         foto.setOpaque(false);
         add(foto, BorderLayout.CENTER);
+        
+        foto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                seleccionarImagen();
+            }
+        });
+
     }
 
-    // metodo para cambiar la imagen desde fuera
+
+    public String seleccionarImagen() {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Selecciona una imagen");
+
+            int result = fileChooser.showOpenDialog(this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+                setImagen(ruta); 
+                return ruta;
+            }else{
+                return null;
+            }
+    }
+    
+    // metodo para obtener la ruta de la imagen
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+    
+    // método para cambiar la imagen desde fuera
+
     public void setImagen(String ruta) {
+        this.rutaImagen = ruta;
         foto.setImagen(ruta);
     }
+
+    
 }

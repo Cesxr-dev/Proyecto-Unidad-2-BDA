@@ -5,8 +5,12 @@
 package presentacion.registroPanel;
 
 import dominio.Carrera;
+import dominio.Perfil;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +24,8 @@ import javax.swing.JTextField;
  * @author demib
  */
 public class PnlCampos extends JPanel {
+    
+    private PnlFoto pnlFoto;
 
     private JTextField txtNombre;
     private com.toedter.calendar.JDateChooser dateChooser;
@@ -28,6 +34,8 @@ public class PnlCampos extends JPanel {
     private JTextField txtContrasenia;
 
     public PnlCampos() {
+        pnlFoto = new PnlFoto();
+        
         inicializarComponentes();
         construirLayout();
         setPreferredSize(new Dimension(324, 602));
@@ -100,5 +108,43 @@ public class PnlCampos extends JPanel {
         add(Box.createVerticalStrut(5));
         add(txtContrasenia);
         
+    }
+    
+    //Pendiente
+    public void validarCampos(){
+        
+    }
+    
+    //Obtener datos para crear perfil
+    public Perfil obtenerDatos(){
+        Perfil perfil = new Perfil();
+        
+        //RUTA FOTO DE PERFIL
+        perfil.setFotoPerfil(pnlFoto.getRutaImagen());
+        
+        //RUTA NOMBRE
+        perfil.setNombre(txtNombre.getText());
+        
+        //FECHA NACIMIENTO
+            //.getDate() es de tipo Date
+            Date date = dateChooser.getDate();
+            //CONVERTIR DE Date a LocalDate
+            LocalDate fecha = date.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            perfil.setFechaNacimiento(fecha);
+        
+        //CARRERA
+        Carrera carrera = (Carrera) comboCarrera.getSelectedItem();
+        
+        perfil.setCarrera(carrera);
+        
+        perfil.setCorreoInstitucional(txtCorreoInstitucional.getText());
+        
+        //CONTRASEÑA
+        perfil.setContrasena(txtContrasenia.getText());
+        
+        return perfil;
     }
 }
