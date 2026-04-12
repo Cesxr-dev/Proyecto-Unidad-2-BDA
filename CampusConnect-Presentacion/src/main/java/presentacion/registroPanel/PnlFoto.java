@@ -36,10 +36,10 @@ public class PnlFoto extends JPanel {
         setMinimumSize(size);
         setMaximumSize(size);
 
-        setLayout(new BorderLayout()); // 👈 importante
+        setLayout(new BorderLayout());
 
         foto = new PanelImagenCircular();
-        foto.setPreferredSize(new Dimension(100, 100)); // tamaño del círculo
+        foto.setPreferredSize(new Dimension(100, 100)); // tamaño del circulo
         foto.setOpaque(false);
         add(foto, BorderLayout.CENTER);
         
@@ -51,6 +51,7 @@ public class PnlFoto extends JPanel {
         });
 
     }
+
 
     public String seleccionarImagen() {
             JFileChooser fileChooser = new JFileChooser();
@@ -73,6 +74,7 @@ public class PnlFoto extends JPanel {
     }
     
     // método para cambiar la imagen desde fuera
+
     public void setImagen(String ruta) {
         this.rutaImagen = ruta;
         foto.setImagen(ruta);
