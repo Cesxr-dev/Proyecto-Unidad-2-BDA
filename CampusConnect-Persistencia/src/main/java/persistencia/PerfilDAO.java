@@ -50,7 +50,7 @@ public class PerfilDAO implements IPerfilDAO {
 
     @Override
     public Perfil buscarPorId(Long id, EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   return em.find(Perfil.class, id);   
     }
 
     @Override
