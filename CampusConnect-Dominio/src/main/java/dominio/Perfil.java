@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Equipo 2 - "Azul"
  */
 @Entity
-@Table(name = "perfiles",
+@Table(name = "perfil",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_institucional"})})
 public class Perfil implements Serializable {
     
