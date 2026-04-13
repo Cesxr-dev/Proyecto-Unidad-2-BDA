@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion.inicioSesion;
-/* PANTALLA DE PRUEBA UTILIZADA PARA CHECAR QUE AL INICIAR SESION SE DIRIJA A LA SIG PANTALLA (FUNCIONAL)
-import SiguientePantallaPrueba.SiguientePantallaPruebaFrm;
-*/
+
+//import SiguientePantallaPrueba.SiguientePantallaPruebaFrm;
 import presentacion.registroPanel.RegistroUsuarioFrm;
 import jakarta.persistence.EntityManager;
 import presentacion.bienvenida.BienvenidaFrm;
@@ -203,66 +202,94 @@ public class InicioSesionFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarSesionBtnActionPerformed
-        limpiarBordes();
+ limpiarBordes();
 
-        if (!validarCamposLogin()) {
+    if (!validarCamposLogin()) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Por favor completa todos los campos correctamente",
+                "Error de Validación",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String correo = correoTxt.getText().trim();
+    String contrasena = contrasenaTxt.getText().trim();
+    
+    // Configuración para ambiente local
+    String direccionIp = "127.0.0.1";
+    String tipoDispositivo = "DESKTOP";
+
+    try {
+        servicios.PerfilService perfilService = new servicios.PerfilService();
+        
+        // Autenticar y crear sesión
+        dominio.SesionActiva sesion = perfilService.autenticarYCrearSesion(
+            correo, 
+            contrasena, 
+            tipoDispositivo, 
+            direccionIp
+        );
+
+        if (sesion != null) {
+            // Sesión creada exitosamente
+            dominio.Perfil perfilAutenticado = sesion.getPerfil();
+            
+            // Guardar sesión en el contexto global
+            presentacion.sesion.SesionGlobal.iniciarSesion(sesion);
+            
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Por favor completa todos los campos correctamente",
-                    "Error de Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+                    "¡Bienvenido " + perfilAutenticado.getNombre() + "!",
+                    "Autenticación Exitosa",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+/* Abrir siguiente pantalla
+            
+            SiguientePantallaPruebaFrm siguiente = new SiguientePantallaPruebaFrm();
+            siguiente.setVisible(true);
 
-        String correo = correoTxt.getText().trim();
-        String contrasena = contrasenaTxt.getText().trim();
 
-        try {
-            servicios.IPerfilService perfilService = new servicios.PerfilService();
-            dominio.Perfil perfilAutenticado = perfilService.autenticar(correo, contrasena);
+            this.dispose(); 
+            
+    //Cerrar login
+ */           
+        } else {
+            // Autenticación fallida - identificar el error
+            EntityManager em = utils.JPAUtil.getEntityManager();
+            try {
+                dominio.Perfil perfilExistente = new persistencia.PerfilDAO()
+                    .buscarPorCorreo(correo, em);
 
-            if (perfilAutenticado != null) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Bienvenido " + perfilAutenticado.getNombre() + "!",
-                        "Exito",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-/*
-               SiguientePantallaPruebaFrm siguientePantalla = new SiguientePantallaPruebaFrm();
-                siguientePantalla.setVisible(true);
-*/
-                this.dispose();
-            } else {
-                EntityManager em = utils.JPAUtil.getEntityManager();
-                try {
-                    dominio.Perfil perfilExistente = new persistencia.PerfilDAO().buscarPorCorreo(correo, em);
-
-                    if (perfilExistente == null) {
-                        correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
-                        correoTxt.setText("");
-                        contrasenaTxt.setText("");
-                        javax.swing.JOptionPane.showMessageDialog(this,
-                                "El correo ingresado no existe",
-                                "Error de Autenticacion",
-                                javax.swing.JOptionPane.ERROR_MESSAGE);
-                        correoTxt.requestFocus();
-                    } else {
-                        contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
-                        contrasenaTxt.setText("");
-                        javax.swing.JOptionPane.showMessageDialog(this,
-                                "La contraseña es incorrecta",
-                                "Error de Autenticacion",
-                                javax.swing.JOptionPane.ERROR_MESSAGE);
-                        contrasenaTxt.requestFocus();
-                    }
-                } finally {
-                    em.close();
+                if (perfilExistente == null) {
+                    correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(
+                        java.awt.Color.RED, 2));
+                    correoTxt.setText("");
+                    contrasenaTxt.setText("");
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "El correo ingresado no existe",
+                            "Error de Autenticación",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    correoTxt.requestFocus();
+                } else {
+                    contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(
+                        java.awt.Color.RED, 2));
+                    contrasenaTxt.setText("");
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "La contraseña es incorrecta",
+                            "Error de Autenticación",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    contrasenaTxt.requestFocus();
                 }
+            } finally {
+                em.close();
             }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
-                    "Error del Sistema",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Error del Sistema: " + e.getMessage(),
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_iniciarSesionBtnActionPerformed
 
     private void registrarseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBtnActionPerformed
