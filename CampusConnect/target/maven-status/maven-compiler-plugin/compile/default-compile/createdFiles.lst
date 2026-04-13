@@ -1,6 +1,7 @@
 com\campusconnect\models\EstadoLike.class
 com\campusconnect\models\Like.class
 com\campusconnect\models\Match.class
+utils\JPAUtil.class
 com\campusconnect\models\TipoInfo.class
 com\campusconnect\Main.class
 com\campusconnect\models\InfoAdicional.class
