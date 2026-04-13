@@ -30,6 +30,25 @@ public class PerfilDAO implements IPerfilDAO {
     }
 
     @Override
+    public Perfil buscarPorCorreo(String correo, EntityManager em) {
+        try {
+            correo = correo.trim().toLowerCase();
+        
+            Perfil resultado = em.createQuery(
+                "SELECT p FROM Perfil p WHERE LOWER(p.correoInstitucional) = :correo", 
+                Perfil.class)
+            .setParameter("correo", correo)
+            .getSingleResult();
+            
+            return resultado;
+        } catch (jakarta.persistence.NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public Perfil buscarPorId(Long id, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
