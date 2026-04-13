@@ -55,7 +55,9 @@ public class PerfilDAO implements IPerfilDAO {
 
     @Override
     public List<Perfil> listar(EntityManager em) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return em.createQuery("SELECT p FROM Perfil p", Perfil.class)
+             .getResultList();
     }
-
+    
+    
 }

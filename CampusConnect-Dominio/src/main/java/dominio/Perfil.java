@@ -28,7 +28,7 @@ public class Perfil implements Serializable {
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
     
-    @Column(name = "foto_perfil")
+    @Column(name = "foto_perfil", nullable = false)
     private String fotoPerfil;
 
     @Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class Perfil implements Serializable {
     private String contrasena;
 
     //Relacion M:N sin atributos con infoAdicional
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "perfil_info_adicional",
         joinColumns = @JoinColumn(name = "perfil_id", nullable = false),

@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ public class InfoAdicional implements Serializable {
     
     // Relacion M:N con perfiles
     @ManyToMany(mappedBy = "perfilInfoAdicional") 
-    private Set<Perfil> perfiles;
+    private Set<Perfil> perfiles = new HashSet<>();
 
     public InfoAdicional() {
     }
