@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import presentacion.inicioSesion.InicioSesionFrm;
 import presentacion.registroPanel.PnlCampos;
 import presentacion.registroPanel.PnlFoto;
 
@@ -61,6 +62,11 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
         regresarBtn.setBackground(new java.awt.Color(255, 255, 255));
         regresarBtn.setForeground(new java.awt.Color(0, 0, 0));
         regresarBtn.setText("<-");
+        regresarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regresarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -141,6 +147,15 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
         
         Perfil perfil = pnlCampos.obtenerDatos();
     }//GEN-LAST:event_btnContinuarActionPerformed
+
+    private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
+        // TODO add your handling code here:
+    InicioSesionFrm inicioSesionFrame = new InicioSesionFrm();
+    inicioSesionFrame.setVisible(true);
+    
+
+    this.dispose();
+    }//GEN-LAST:event_regresarBtnActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
