@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\Main.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Carrera.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\EstadoLike.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\InfoAdicional.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Like.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Match.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Mensaje.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Perfil.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\TipoInfo.java
+C:\NetBeansProjects\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\utils\JPAUtil.java
+=======
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\Main.java
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Carrera.java
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\EstadoLike.java
@@ -8,3 +20,4 @@ C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\Perfil.java
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\com\campusconnect\models\TipoInfo.java
 C:\Users\chefl\OneDrive\Documentos\NetBeansProjects\GitHub\Proyecto-Unidad-2-BDA\CampusConnect\src\main\java\utils\JPAUtil.java
+>>>>>>> origin/main

@@ -1,19 +1,17 @@
 
 package presentacion.registroPanel;
 
-import dominio.Carrera;
 import dominio.Perfil;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+
 import presentacion.inicioSesion.InicioSesionFrm;
 import presentacion.registroPanel.PnlCampos;
 import presentacion.registroPanel.PnlFoto;
+import servicios.PerfilService;
 
 /**
  *
@@ -23,13 +21,15 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
     
     PnlCampos pnlCampos;
     PnlFoto pnlFoto;
+    PerfilService perfilService;
 
     public RegistroUsuarioFrm() {
+        perfilService = new PerfilService();
         pnlFoto = new PnlFoto();
         pnlCampos = new PnlCampos();
         
         initComponents();
-        inicializarComponentes();
+        
         asignarCompALayout();
         this.setVisible(true);
     }
@@ -142,10 +142,28 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        // TODO add your handling code here:
-        //Falta hacer validaciones en pnlCampos y despues manejarla aqui con true or false
         
-        Perfil perfil = pnlCampos.obtenerDatos();
+        
+
+        if (pnlCampos.validarCampos()) {
+            Perfil perfil = pnlCampos.obtenerDatos();
+            perfil.setFotoPerfil(pnlFoto.getRutaImagen());
+            perfilService.guardar(perfil);
+            pnlCampos.limpiarCampos();
+            
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "¡Perfil creado exitosamente!",
+                    "Registro exitoso",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            presentacion.homepagePanel.FrmBuscar homePage = new presentacion.homepagePanel.FrmBuscar();
+            homePage.setVisible(true);
+            this.dispose();
+        }
+
+        
+        
+        
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
@@ -199,17 +217,12 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
     private javax.swing.JButton regresarBtn;
     // End of variables declaration//GEN-END:variables
     
-    //DECLARACION DE VARIABLES MANUAL
     
     
-    //INICIALIZACION DE COMPONENTES
-    private void inicializarComponentes(){
-        
-    }
     
-    private void cargarCombos(){
-        
-    }
+    
+    
+    
     
     //MANEJO DE LAYOUTS
     private void asignarCompALayout(){

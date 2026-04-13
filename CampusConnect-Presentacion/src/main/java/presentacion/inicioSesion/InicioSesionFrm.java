@@ -259,6 +259,7 @@ public class InicioSesionFrm extends javax.swing.JFrame {
                 dominio.Perfil perfilExistente = new persistencia.PerfilDAO()
                     .buscarPorCorreo(correo, em);
 
+
                 if (perfilExistente == null) {
                     correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(
                         java.awt.Color.RED, 2));
@@ -278,6 +279,7 @@ public class InicioSesionFrm extends javax.swing.JFrame {
                             "Error de Autenticación",
                             javax.swing.JOptionPane.ERROR_MESSAGE);
                     contrasenaTxt.requestFocus();
+
                 }
             } finally {
                 em.close();
@@ -364,51 +366,55 @@ public class InicioSesionFrm extends javax.swing.JFrame {
     private javax.swing.JButton regresarBtn;
     // End of variables declaration//GEN-END:variables
 
-private boolean validarCamposLogin() {
-  boolean esValido = true;
-    String mensaje = "";
-    
-    String correo = correoTxt.getText().trim();
-    String contrasena = contrasenaTxt.getText().trim();
-    
-    if (correo.isEmpty()) {
-        correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
-        mensaje += "El correo es obligatorio.\n";
-        esValido = false;
-    } else if (!esCorreoValido(correo)) {
-        correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
-        mensaje += "El correo debe ser institucional (@potros.itson.edu.mx).\n";
-        esValido = false;
-    } else {
-        correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
+    private boolean validarCamposLogin() {
+      boolean esValido = true;
+        String mensaje = "";
+
+        String correo = correoTxt.getText().trim();
+        String contrasena = contrasenaTxt.getText().trim();
+
+        if (correo.isEmpty()) {
+            correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
+            mensaje += "El correo es obligatorio.\n";
+            esValido = false;
+        } else if (!esCorreoValido(correo)) {
+            correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
+            mensaje += "El correo debe ser institucional (@potros.itson.edu.mx).\n";
+            esValido = false;
+        } else {
+            correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
+        }
+
+        if (contrasena.isEmpty()) {
+            contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
+            mensaje += "La contraseña es obligatoria.";
+            esValido = false;
+        } else {
+            contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
+        }
+
+        if (!esValido) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                mensaje, 
+                "Error de Validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+
+        return esValido;
     }
     
-    if (contrasena.isEmpty()) {
-        contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.RED, 2));
-        mensaje += "La contraseña es obligatoria.";
-        esValido = false;
-    } else {
+    
+
+
+
+    private boolean esCorreoValido(String correo) {
+        String patronCorreo = "^[a-zA-Z0-9._%+-]+@potros\\.itson\\.edu\\.mx$";
+        return correo.matches(patronCorreo);
+    }
+
+    private void limpiarBordes() {
+        correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
         contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
     }
-    
-    if (!esValido) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            mensaje, 
-            "Error de Validación", 
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-    }
-    
-    return esValido;
-}
-
-private boolean esCorreoValido(String correo) {
-    String patronCorreo = "^[a-zA-Z0-9._%+-]+@potros\\.itson\\.edu\\.mx$";
-    return correo.matches(patronCorreo);
-}
-
-private void limpiarBordes() {
-    correoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
-    contrasenaTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1));
-}
 
 }

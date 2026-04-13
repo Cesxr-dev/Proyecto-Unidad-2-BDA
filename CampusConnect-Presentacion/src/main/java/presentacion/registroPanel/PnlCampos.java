@@ -5,19 +5,29 @@
 package presentacion.registroPanel;
 
 import dominio.Carrera;
+import dominio.InfoAdicional;
 import dominio.Perfil;
+import dominio.TipoInfo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.time.LocalDate;
 import java.time.ZoneId;
+
 import java.util.Date;
+import java.util.HashSet;
+
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  *
@@ -25,22 +35,39 @@ import javax.swing.JTextField;
  */
 public class PnlCampos extends JPanel {
     
-    private PnlFoto pnlFoto;
+    
 
     private JTextField txtNombre;
     private com.toedter.calendar.JDateChooser dateChooser;
     private JComboBox<Carrera> comboCarrera;
     private JTextField txtCorreoInstitucional;
     private JTextField txtContrasenia;
+    
+    
+    private JScrollPane scrollGustos;
+    private JScrollPane scrollHobbies;
+    private JScrollPane scrollIntereses;
+    
+    private JTextArea txtAreaGustos;
+    
+    private JTextArea txtAreaHobbies;
+    
+    private JTextArea txtAreaIntereses;
+    
+    // Colores de borde como constantes de instancia
+    private final Border bordeError = BorderFactory.createLineBorder(Color.RED);
+    private final Border bordeOk = BorderFactory.createLineBorder(new Color(200, 200, 200)); // gris suave
 
     public PnlCampos() {
-        pnlFoto = new PnlFoto();
+        
         
         inicializarComponentes();
         construirLayout();
         setPreferredSize(new Dimension(324, 602));
         this.setVisible(true);
     }
+    
+    
 
     private void inicializarComponentes() {
         txtNombre = new JTextField();
@@ -48,6 +75,32 @@ public class PnlCampos extends JPanel {
         comboCarrera = new JComboBox<>(Carrera.values());
         txtCorreoInstitucional = new JTextField();
         txtContrasenia = new JTextField();
+        
+        txtAreaGustos = new JTextArea();
+        txtAreaHobbies = new JTextArea();
+        txtAreaIntereses = new JTextArea();
+        
+        txtAreaGustos.setLineWrap(true);    // va hacer que el texto haga salto de linea
+        txtAreaGustos.setWrapStyleWord(true);
+        txtAreaHobbies.setLineWrap(true);
+        txtAreaHobbies.setWrapStyleWord(true);
+        txtAreaIntereses.setLineWrap(true);
+        txtAreaIntereses.setWrapStyleWord(true);
+        
+        // Envolver en JScrollPane con tamaño fijo
+        scrollGustos = new JScrollPane(txtAreaGustos);
+        scrollHobbies = new JScrollPane(txtAreaHobbies);
+        scrollIntereses = new JScrollPane(txtAreaIntereses);
+        
+        Dimension tamanoArea = new Dimension(Integer.MAX_VALUE, 80); // altura fija 80px
+        scrollGustos.setMaximumSize(tamanoArea);
+        scrollHobbies.setMaximumSize(tamanoArea);
+        scrollIntereses.setMaximumSize(tamanoArea);
+
+        scrollGustos.setAlignmentX(LEFT_ALIGNMENT);
+        scrollHobbies.setAlignmentX(LEFT_ALIGNMENT);
+        scrollIntereses.setAlignmentX(LEFT_ALIGNMENT);
+        
 
         txtNombre.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         dateChooser.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
@@ -108,19 +161,120 @@ public class PnlCampos extends JPanel {
         add(Box.createVerticalStrut(5));
         add(txtContrasenia);
         
+        // ===== gustos =====
+        JLabel lblGustos = new JLabel("Gustos:");
+        lblCarrera.setAlignmentX(LEFT_ALIGNMENT); 
+        add(lblGustos);
+        add(Box.createVerticalStrut(5));
+        add(scrollGustos); 
+        add(Box.createVerticalStrut(15));
+        
+        // ===== hobbies =====
+        JLabel lblHobbies = new JLabel("Hobbies:");
+        lblCarrera.setAlignmentX(LEFT_ALIGNMENT); 
+        add(lblHobbies);
+        add(Box.createVerticalStrut(5));
+        add(scrollHobbies); 
+        add(Box.createVerticalStrut(15));
+        
+        // ===== intereses =====
+        JLabel lblIntereses = new JLabel("Intereses:");
+        lblCarrera.setAlignmentX(LEFT_ALIGNMENT); 
+        add(lblIntereses);
+        add(Box.createVerticalStrut(5));
+        add(scrollIntereses); 
+        add(Box.createVerticalStrut(15));
+        
     }
     
     //Pendiente
-    public void validarCampos(){
+    public boolean validarCampos() {
+        boolean valido = true;
+
+        if (txtNombre.getText().trim().isEmpty()) {
+            txtNombre.setBorder(bordeError);
+            valido = false;
+        } else {
+            txtNombre.setBorder(bordeOk);
+        }
+
+        if (dateChooser.getDate() == null) {
+            dateChooser.setBorder(bordeError);
+            valido = false;
+        } else {
+            LocalDate fecha = dateChooser.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate();
+            if (fecha.isAfter(LocalDate.now().minusYears(18))) {
+                dateChooser.setBorder(bordeError);
+                valido = false;
+            } else {
+                dateChooser.setBorder(bordeOk);
+            }
+        }
+
+        String correo = txtCorreoInstitucional.getText().trim();
+        if (correo.isEmpty() || !correo.matches("^[\\w.]+@potros.itson\\.edu\\.mx$")) {
+            txtCorreoInstitucional.setBorder(bordeError);
+            valido = false;
+        } else {
+            txtCorreoInstitucional.setBorder(bordeOk);
+        }
+
+        if (txtContrasenia.getText().trim().length() < 6) {
+            txtContrasenia.setBorder(bordeError);
+            valido = false;
+        } else {
+            txtContrasenia.setBorder(bordeOk);
+        }
+
+        if (txtAreaGustos.getText().trim().isEmpty()) {
+            scrollGustos.setBorder(bordeError);
+            valido = false;
+        } else {
+            scrollGustos.setBorder(bordeOk);
+        }
+
+        if (txtAreaHobbies.getText().trim().isEmpty()) {
+            scrollHobbies.setBorder(bordeError);
+            valido = false;
+        } else {
+            scrollHobbies.setBorder(bordeOk);
+        }
+
+        if (txtAreaIntereses.getText().trim().isEmpty()) {
+            scrollIntereses.setBorder(bordeError);
+            valido = false;
+        } else {
+            scrollIntereses.setBorder(bordeOk);
+        }
+
+        return valido;
+    }
+    
+    public void limpiarCampos() {
+        // 1. Limpiar campos de texto
+        txtNombre.setText("");
+        txtCorreoInstitucional.setText("");
+        txtContrasenia.setText("");
         
+        // 2. Limpiar JDateChooser (se le asigna null para dejarlo en blanco)
+        dateChooser.setDate(null);
+        
+        // 3. Reiniciar el JComboBox a la primera opcion (índice 0)
+        // -1 para que no se vea ninguna opcioon
+        comboCarrera.setSelectedIndex(0); 
+        
+        // 4. Limpiar areas de texto
+        txtAreaGustos.setText("");
+        txtAreaHobbies.setText("");
+        txtAreaIntereses.setText("");
     }
     
     //Obtener datos para crear perfil
     public Perfil obtenerDatos(){
         Perfil perfil = new Perfil();
         
-        //RUTA FOTO DE PERFIL
-        perfil.setFotoPerfil(pnlFoto.getRutaImagen());
+        
         
         //RUTA NOMBRE
         perfil.setNombre(txtNombre.getText());
@@ -140,11 +294,41 @@ public class PnlCampos extends JPanel {
         
         perfil.setCarrera(carrera);
         
+        //CORREO
         perfil.setCorreoInstitucional(txtCorreoInstitucional.getText());
         
         //CONTRASEÑA
         perfil.setContrasena(txtContrasenia.getText());
         
+        
+        
+        //GUSTOS-HOBBIES-INTERESES
+        Set<InfoAdicional> infoAdicionalSet = new HashSet<>();
+
+        InfoAdicional infoAdicionalGustos = new InfoAdicional();
+        infoAdicionalGustos.setTipo(TipoInfo.GUSTO);
+        infoAdicionalGustos.setNombre(txtAreaGustos.getText());
+        
+        infoAdicionalSet.add(infoAdicionalGustos);
+
+        InfoAdicional infoAdicionalHobbies = new InfoAdicional();
+        infoAdicionalHobbies.setTipo(TipoInfo.HOBBIE);
+        infoAdicionalHobbies.setNombre(txtAreaHobbies.getText());
+        
+        infoAdicionalSet.add(infoAdicionalHobbies);
+
+        InfoAdicional infoAdicionalIntereses = new InfoAdicional();
+        infoAdicionalIntereses.setTipo(TipoInfo.INTERES);
+        infoAdicionalIntereses.setNombre(txtAreaIntereses.getText());
+        
+        infoAdicionalSet.add(infoAdicionalIntereses);
+        
+        for (InfoAdicional info : infoAdicionalSet) {
+            info.getPerfiles().add(perfil);
+        }
+
+        perfil.setPerfilInfoAdicional(infoAdicionalSet);
+
         return perfil;
     }
 }
