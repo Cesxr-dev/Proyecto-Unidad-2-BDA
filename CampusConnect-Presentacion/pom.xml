@@ -6,16 +6,32 @@
     <version>1.0</version>
     <packaging>jar</packaging>
     <dependencies>
+        <!-- CAPA SERVICIOS !-->
         <dependency>
             <groupId>equipoazul</groupId>
             <artifactId>CampusConnect-Servicios</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- CAPA DOMINIO !-->
+        <dependency>
+            <groupId>equipoazul</groupId>
+            <artifactId>CampusConnect-Dominio</artifactId>
+            <version>1.0</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE220</version>
         </dependency>
+        
+        <!-- Libreria externa JCalendar !-->
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

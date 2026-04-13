@@ -1,5 +1,5 @@
 
-package presentacion;
+package presentacion.registroPanel;
 
 import java.awt.Color;
 import java.awt.Font;

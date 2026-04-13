@@ -62,6 +62,8 @@ public class Perfil implements Serializable {
 
     public Perfil() {
     }
+    
+    
 
     public Perfil(Long id, String nombre, LocalDate fechaNacimiento, 
             String fotoPerfil, Carrera carrera, String correoInstitucional, 

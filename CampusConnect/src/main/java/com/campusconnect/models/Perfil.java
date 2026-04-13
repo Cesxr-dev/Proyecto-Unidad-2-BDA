@@ -33,7 +33,7 @@ public class Perfil {
     private String fotoPerfil;
     
     //Relacion N:M sin atributos con infoAdicional
-
+    
     @ManyToMany
     @JoinTable(
             
