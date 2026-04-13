@@ -80,6 +80,21 @@ public class PerfilService implements IPerfilService {
     }
 
     @Override
+    public Perfil autenticar(String correo, String contrasena) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            Perfil perfil = perfilDao.buscarPorCorreo(correo, em);
+        
+            if (perfil != null && perfil.getContrasena().equals(contrasena)) {
+                return perfil;
+            }
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public Perfil buscarPorId(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
