@@ -12,9 +12,7 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
                 
         this.setVisible(true);
     }
-    
-    
-    
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
