@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion.inicioSesion;
-
+/* PANTALLA DE PRUEBA UTILIZADA PARA CHECAR QUE AL INICIAR SESION SE DIRIJA A LA SIG PANTALLA (FUNCIONAL)
 import SiguientePantallaPrueba.SiguientePantallaPruebaFrm;
+*/
 import presentacion.registroPanel.RegistroUsuarioFrm;
 import jakarta.persistence.EntityManager;
 
@@ -211,9 +212,10 @@ public class InicioSesionFrm extends javax.swing.JFrame {
                         "Bienvenido " + perfilAutenticado.getNombre() + "!",
                         "Exito",
                         javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
-                SiguientePantallaPruebaFrm siguientePantalla = new SiguientePantallaPruebaFrm();
+/*
+               SiguientePantallaPruebaFrm siguientePantalla = new SiguientePantallaPruebaFrm();
                 siguientePantalla.setVisible(true);
+*/
                 this.dispose();
             } else {
                 EntityManager em = utils.JPAUtil.getEntityManager();
