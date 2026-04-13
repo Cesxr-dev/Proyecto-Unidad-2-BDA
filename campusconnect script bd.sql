@@ -140,3 +140,33 @@ CREATE TABLE `perfil_info_adicional` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2026-03-24 13:00:34
+
+-- lo siguiente es para hacer funcionar el monitoreo de sesiones activas
+CREATE TABLE IF NOT EXISTS `sesiones_activas` (
+  `sesion_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `perfil_id` BIGINT NOT NULL,
+  `token_sesion` VARCHAR(500) NOT NULL UNIQUE,
+  `direccion_ip` VARCHAR(45),
+  `tipo_dispositivo` VARCHAR(50),
+  `fecha_inicio` DATETIME NOT NULL,
+  `fecha_ultima_actividad` DATETIME NOT NULL,
+  `fecha_cierre` DATETIME,
+  `estado` ENUM('ACTIVA', 'CERRADA', 'EXPIRADA') DEFAULT 'ACTIVA',
+  PRIMARY KEY (`sesion_id`),
+  UNIQUE KEY `UQ_token` (`token_sesion`),
+  KEY `FK_perfil_sesiones` (`perfil_id`),
+  KEY `IDX_perfil_estado` (`perfil_id`, `estado`),
+  CONSTRAINT `FK_perfil_sesiones` FOREIGN KEY (`perfil_id`) 
+    REFERENCES `perfil` (`perfil_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE INDEX IDX_sesiones_activas_perfil 
+ON sesiones_activas(perfil_id, estado, fecha_inicio);
+
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE sesiones_activas SET estado = 'CERRADA';
+SELECT sesion_id, estado FROM sesiones_activas;
+
+--lista secciones activas
+SELECT * FROM sesiones_activas;
