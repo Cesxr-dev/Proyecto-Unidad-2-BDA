@@ -8,6 +8,7 @@ import SiguientePantallaPrueba.SiguientePantallaPruebaFrm;
 */
 import presentacion.registroPanel.RegistroUsuarioFrm;
 import jakarta.persistence.EntityManager;
+import presentacion.bienvenida.BienvenidaFrm;
 
 /**
  *
@@ -34,6 +35,7 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         fondoPnl = new javax.swing.JPanel();
         pnlHeader = new javax.swing.JPanel();
         inicioSesionHeaderLbl = new javax.swing.JLabel();
+        regresarBtn = new javax.swing.JButton();
         camposPnl = new javax.swing.JPanel();
         iniciarSesionBtn = new javax.swing.JButton();
         contrasenaTxt = new javax.swing.JTextField();
@@ -59,20 +61,31 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         inicioSesionHeaderLbl.setForeground(new java.awt.Color(0, 0, 0));
         inicioSesionHeaderLbl.setText("Inicio de Sesión");
 
+        regresarBtn.setBackground(new java.awt.Color(255, 255, 255));
+        regresarBtn.setForeground(new java.awt.Color(0, 0, 0));
+        regresarBtn.setText("<-");
+        regresarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regresarBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                .addGap(143, 143, 143)
+                .addContainerGap()
+                .addComponent(regresarBtn)
+                .addGap(65, 65, 65)
                 .addComponent(inicioSesionHeaderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(157, Short.MAX_VALUE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeaderLayout.createSequentialGroup()
+            .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(inicioSesionHeaderLbl)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(regresarBtn))
         );
 
         camposPnl.setBackground(new java.awt.Color(255, 255, 255));
@@ -177,11 +190,11 @@ public class InicioSesionFrm extends javax.swing.JFrame {
             fondoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fondoPnlLayout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(16, 16, 16)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(camposPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         getContentPane().add(fondoPnl, java.awt.BorderLayout.CENTER);
@@ -261,6 +274,18 @@ public class InicioSesionFrm extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_registrarseBtnActionPerformed
 
+    private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
+        // TODO add your handling code here:
+
+        
+    BienvenidaFrm bienvenidaFrame = new BienvenidaFrm();
+    bienvenidaFrame.setVisible(true);
+    
+
+    this.dispose();
+
+    }//GEN-LAST:event_regresarBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +334,7 @@ public class InicioSesionFrm extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JButton registrarseBtn;
+    private javax.swing.JButton regresarBtn;
     // End of variables declaration//GEN-END:variables
 
 private boolean validarCamposLogin() {
