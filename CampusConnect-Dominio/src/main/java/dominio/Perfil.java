@@ -59,6 +59,10 @@ public class Perfil implements Serializable {
     //Relacion 1:N con Mensajes
     @OneToMany(mappedBy = "perfilEmisor")
     private Set<Mensaje> mensajes;
+    
+        @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SesionActiva> sesionesActivas;
+    
 
     public Perfil() {
     }
@@ -157,6 +161,15 @@ public class Perfil implements Serializable {
     }
     public void setMensajes(Set<Mensaje> mensajes) {
         this.mensajes = mensajes;
+    }
+    
+        //nuevo
+    public List<SesionActiva> getSesionesActivas() {
+        return sesionesActivas;
+    }
+    //nuevo
+    public void setSesionesActivas(List<SesionActiva> sesionesActivas) {
+        this.sesionesActivas = sesionesActivas;
     }
     
     
