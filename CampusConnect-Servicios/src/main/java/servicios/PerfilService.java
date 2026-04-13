@@ -1,5 +1,6 @@
 
 package servicios;
+import dominio.SesionActiva;
 
 import dominio.Perfil;
 import jakarta.persistence.EntityManager;
@@ -81,6 +82,7 @@ public class PerfilService implements IPerfilService {
 
     @Override
     public Perfil autenticar(String correo, String contrasena) {
+        /*
         EntityManager em = JPAUtil.getEntityManager();
         try {
             Perfil perfil = perfilDao.buscarPorCorreo(correo, em);
@@ -92,6 +94,18 @@ public class PerfilService implements IPerfilService {
         } finally {
             em.close();
         }
+        */
+            EntityManager em = JPAUtil.getEntityManager();
+    try {
+        Perfil perfil = perfilDao.buscarPorCorreo(correo, em);
+        
+        if (perfil != null && perfil.getContrasena().equals(contrasena)) {
+            return perfil;
+        }
+        return null;
+    } finally {
+        em.close();
+    }
     }
 
     @Override
@@ -146,6 +160,27 @@ public class PerfilService implements IPerfilService {
             throw new IllegalArgumentException("La informacion adicional del perfil es obligatoria");
         }
         
+    }
+    
+        public SesionActiva autenticarYCrearSesion(String correo, String contrasena,
+            String tipoDispositivo, String direccionIp) {
+        Perfil perfil = autenticar(correo, contrasena);
+
+        if (perfil != null) {
+            try {
+           
+                SesionActivaService sesionService = new SesionActivaService();
+                SesionActiva sesion = sesionService.crearSesion(perfil.getId(),
+                        tipoDispositivo,
+                        direccionIp);
+                return sesion;
+            } catch (Exception e) {
+                System.err.println("Error al crear sesión durante autenticación: " + e.getMessage());
+                return null;
+            }
+        }
+
+        return null;
     }
     
 }
