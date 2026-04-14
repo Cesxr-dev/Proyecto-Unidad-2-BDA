@@ -1,41 +1,36 @@
-
 package presentacion.registroPanel;
 
-import dominio.Carrera;
 import dominio.Perfil;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import presentacion.inicioSesion.InicioSesionFrm;
-import presentacion.registroPanel.PnlCampos;
-import presentacion.registroPanel.PnlFoto;
+import servicios.IPerfilService;
+import servicios.PerfilService;
 
 /**
  *
  * @author Equipo 2 - "Azul"
  */
 public class RegistroUsuarioFrm extends javax.swing.JFrame {
-    
+
+    IPerfilService perfilService = new PerfilService();
+
     PnlCampos pnlCampos;
     PnlFoto pnlFoto;
 
     public RegistroUsuarioFrm() {
         pnlFoto = new PnlFoto();
         pnlCampos = new PnlCampos();
-        
+
         initComponents();
         inicializarComponentes();
         asignarCompALayout();
         this.setVisible(true);
     }
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -144,17 +139,22 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
         //Falta hacer validaciones en pnlCampos y despues manejarla aqui con true or false
-        
+
+        System.out.println("Botón CONTINUAR presionado");  // Línea de depuración
+
         Perfil perfil = pnlCampos.obtenerDatos();
+        System.out.println("Perfil obtenido: " + perfil);  // Línea de depuración
+
+        perfilService.guardar(perfil);
+        System.out.println("Perfil guardado");  // Línea de depuración
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
         // TODO add your handling code here:
-    InicioSesionFrm inicioSesionFrame = new InicioSesionFrm();
-    inicioSesionFrame.setVisible(true);
-    
+        InicioSesionFrm inicioSesionFrame = new InicioSesionFrm();
+        inicioSesionFrame.setVisible(true);
 
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_regresarBtnActionPerformed
 
     public static void main(String args[]) {
@@ -198,30 +198,28 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JButton regresarBtn;
     // End of variables declaration//GEN-END:variables
-    
+
     //DECLARACION DE VARIABLES MANUAL
-    
-    
     //INICIALIZACION DE COMPONENTES
-    private void inicializarComponentes(){
-        
+    private void inicializarComponentes() {
+
     }
-    
-    private void cargarCombos(){
-        
+
+    private void cargarCombos() {
+
     }
-    
+
     //MANEJO DE LAYOUTS
-    private void asignarCompALayout(){
-        
+    private void asignarCompALayout() {
+
         pnlFormRegistro.removeAll(); // limpiar lo que hizo NetBeans
 
         pnlFormRegistro.setLayout(new BoxLayout(pnlFormRegistro, BoxLayout.Y_AXIS));
-        
+
         pnlFormRegistro.setBorder(
-            BorderFactory.createEmptyBorder(0, 20, 0, 20)
+                BorderFactory.createEmptyBorder(0, 20, 0, 20)
         );
-        
+
         pnlFormRegistro.setBackground(Color.decode("#0078C2"));
 
         // Centrar foto

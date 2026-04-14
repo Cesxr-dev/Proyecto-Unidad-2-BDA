@@ -1,5 +1,5 @@
-
 package servicios;
+
 import dominio.SesionActiva;
 
 import dominio.Perfil;
@@ -15,37 +15,51 @@ import utils.JPAUtil;
  * @author Equipo 2 - "Azul"
  */
 public class PerfilService implements IPerfilService {
-    
+
     private IPerfilDAO perfilDao;
-    
+
     public PerfilService() {
         this.perfilDao = new PerfilDAO();
     }
 
     @Override
     public void guardar(Perfil perfil) {
+        System.out.println("1. Entrando a guardar");
         validarPerfil(perfil);
-        
+        System.out.println("2. Validación pasada");
+
+        System.out.println("2.5. Antes de JPAUtil.getEntityManager()");
         EntityManager em = JPAUtil.getEntityManager();
+        System.out.println("2.6. Después de JPAUtil.getEntityManager()");
+        System.out.println("3. EntityManager obtenido");
+
         try {
+            System.out.println("4. Iniciando transacción");
             em.getTransaction().begin();
+            System.out.println("5. Transacción iniciada");
+
             perfilDao.guardar(perfil, em);
+            System.out.println("6. Perfil persistido");
+
             em.getTransaction().commit();
+            System.out.println("7. Commit realizado");
         } catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
+            e.printStackTrace();  // Esto mostrará el stack trace
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            System.err.print("Error al guardar el perfil.");
             throw e;
         } finally {
             em.close();
+            System.out.println("8. EntityManager cerrado");
         }
     }
 
     @Override
     public void actualizar(Perfil perfil) {
         validarPerfil(perfil);
-        
+
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -94,18 +108,18 @@ public class PerfilService implements IPerfilService {
         } finally {
             em.close();
         }
-        */
-            EntityManager em = JPAUtil.getEntityManager();
-    try {
-        Perfil perfil = perfilDao.buscarPorCorreo(correo, em);
-        
-        if (perfil != null && perfil.getContrasena().equals(contrasena)) {
-            return perfil;
+         */
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            Perfil perfil = perfilDao.buscarPorCorreo(correo, em);
+
+            if (perfil != null && perfil.getContrasena().equals(contrasena)) {
+                return perfil;
+            }
+            return null;
+        } finally {
+            em.close();
         }
-        return null;
-    } finally {
-        em.close();
-    }
     }
 
     @Override
@@ -117,18 +131,18 @@ public class PerfilService implements IPerfilService {
     public List<Perfil> listar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     private void validarPerfil(Perfil perfil) {
         //  Validacion de objeto
         if (perfil == null) {
             throw new IllegalArgumentException("El perfil no puede ser nulo.");
         }
-        
+
         //  Validacion de nombre
         if (perfil.getNombre() == null || perfil.getNombre().trim().isBlank()) {
             throw new IllegalArgumentException("El nombre del perfil es obligatorio.");
         }
-        
+
         //  Validaciones de fecha de nacimiento
         if (perfil.getFechaNacimiento().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException(
@@ -137,38 +151,38 @@ public class PerfilService implements IPerfilService {
         if (perfil.getFechaNacimiento().isAfter(LocalDate.now().minusYears(16))) {
             throw new IllegalArgumentException("La edad minima de registro es de 16 años.");
         }
-        
+
         //  Validación de carrera
         if (perfil.getCarrera() == null || perfil.getCarrera().getNombre().trim().isBlank()) {
             throw new IllegalArgumentException("La carrera del perfil es obligatoria");
         }
-        
+
         //  Validación de correo institucional
         if (perfil.getCorreoInstitucional() == null || perfil.getCorreoInstitucional()
                 .trim().isBlank()) {
             throw new IllegalArgumentException("El correo institucional del "
                     + "perfil es obligatorio");
         }
-        
+
         //  Validación de contraseña
         if (perfil.getContrasena() == null || perfil.getContrasena().trim().isBlank()) {
             throw new IllegalArgumentException("La contrasena del perfil es obligatoria");
         }
-        
+
         //  Validación de información adicional
-        if (perfil.getPerfilInfoAdicional() == null || perfil.getPerfilInfoAdicional().isEmpty()) {
-            throw new IllegalArgumentException("La informacion adicional del perfil es obligatoria");
-        }
-        
+//        if (perfil.getPerfilInfoAdicional() == null || perfil.getPerfilInfoAdicional().isEmpty()) {
+//            throw new IllegalArgumentException("La informacion adicional del perfil es obligatoria");
+//        }
+//        
     }
-    
-        public SesionActiva autenticarYCrearSesion(String correo, String contrasena,
+
+    public SesionActiva autenticarYCrearSesion(String correo, String contrasena,
             String tipoDispositivo, String direccionIp) {
         Perfil perfil = autenticar(correo, contrasena);
 
         if (perfil != null) {
             try {
-           
+
                 SesionActivaService sesionService = new SesionActivaService();
                 SesionActiva sesion = sesionService.crearSesion(perfil.getId(),
                         tipoDispositivo,
@@ -182,5 +196,5 @@ public class PerfilService implements IPerfilService {
 
         return null;
     }
-    
+
 }

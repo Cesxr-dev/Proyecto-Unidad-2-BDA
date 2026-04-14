@@ -122,18 +122,18 @@ public class PnlCampos extends JPanel {
         //RUTA FOTO DE PERFIL
         perfil.setFotoPerfil(pnlFoto.getRutaImagen());
         
-        //RUTA NOMBRE
+        //NOMBRE DE ESTUDIANTE
+        
         perfil.setNombre(txtNombre.getText());
         
         //FECHA NACIMIENTO
-            //.getDate() es de tipo Date
-            Date date = dateChooser.getDate();
-            //CONVERTIR DE Date a LocalDate
-            LocalDate fecha = date.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+        //.getDate() es de tipo Date
+        Date date = dateChooser.getDate();
+        //CONVERTIR DE Date a LocalDate
+        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDate();
 
-            perfil.setFechaNacimiento(fecha);
+        perfil.setFechaNacimiento(fecha);
         
         //CARRERA
         Carrera carrera = (Carrera) comboCarrera.getSelectedItem();
