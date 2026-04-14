@@ -129,7 +129,12 @@ public class PerfilService implements IPerfilService {
 
     @Override
     public List<Perfil> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return perfilDao.listar(em);
+        } finally {
+            em.close();
+        }
     }
 
     private void validarPerfil(Perfil perfil) {

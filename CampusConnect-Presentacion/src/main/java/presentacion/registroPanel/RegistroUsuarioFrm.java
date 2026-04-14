@@ -6,8 +6,10 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+
 import presentacion.inicioSesion.InicioSesionFrm;
-import servicios.IPerfilService;
+import presentacion.registroPanel.PnlCampos;
+import presentacion.registroPanel.PnlFoto;
 import servicios.PerfilService;
 
 /**
@@ -20,13 +22,15 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
 
     PnlCampos pnlCampos;
     PnlFoto pnlFoto;
+    PerfilService perfilService;
 
     public RegistroUsuarioFrm() {
+        perfilService = new PerfilService();
         pnlFoto = new PnlFoto();
         pnlCampos = new PnlCampos();
 
         initComponents();
-        inicializarComponentes();
+        
         asignarCompALayout();
         this.setVisible(true);
     }
@@ -147,6 +151,28 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
 
         perfilService.guardar(perfil);
         System.out.println("Perfil guardado");  // Línea de depuración
+        
+        
+
+        if (pnlCampos.validarCampos()) {
+            Perfil perfil = pnlCampos.obtenerDatos();
+            perfil.setFotoPerfil(pnlFoto.getRutaImagen());
+            perfilService.guardar(perfil);
+            pnlCampos.limpiarCampos();
+            
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "¡Perfil creado exitosamente!",
+                    "Registro exitoso",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            presentacion.homepagePanel.FrmBuscar homePage = new presentacion.homepagePanel.FrmBuscar();
+            homePage.setVisible(true);
+            this.dispose();
+        }
+
+        
+        
+        
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void regresarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBtnActionPerformed
@@ -209,6 +235,14 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
 
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
     //MANEJO DE LAYOUTS
     private void asignarCompALayout() {
 
