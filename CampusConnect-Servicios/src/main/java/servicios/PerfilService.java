@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 import persistencia.IPerfilDAO;
+import persistencia.LikeDAO;
 import persistencia.PerfilDAO;
 import utils.JPAUtil;
 
@@ -60,7 +61,31 @@ public class PerfilService implements IPerfilService {
             em.close();
         }
     }
-
+    
+    //metodoPrueba
+    public boolean actualizar2(dominio.Perfil perfil) {
+        try {
+            jakarta.persistence.EntityManager em = utils.JPAUtil.getEntityManager();
+            try {
+                em.getTransaction().begin();
+                em.merge(perfil);
+                em.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                if (em.getTransaction().isActive()) {
+                    em.getTransaction().rollback();
+                }
+                throw e;
+            } finally {
+                em.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //metodoPrueba
+    
     @Override
     public void eliminar(Long id) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -79,6 +104,63 @@ public class PerfilService implements IPerfilService {
         }
     }
 
+    //metodoPrueba
+    public boolean eliminar2(Long perfilId) {
+   EntityManager em = utils.JPAUtil.getEntityManager();
+
+    try {
+        em.getTransaction().begin();
+
+        Perfil perfil = em.find(Perfil.class, perfilId);
+
+        if (perfil != null) {
+
+          
+            em.createQuery(
+                "DELETE FROM Match m WHERE m.likeA.id IN (" +
+                "SELECT l.id FROM Like l WHERE l.perfilOrigen.id = :id OR l.perfilDestino.id = :id" +
+                ") OR m.likeB.id IN (" +
+                "SELECT l.id FROM Like l WHERE l.perfilOrigen.id = :id OR l.perfilDestino.id = :id" +
+                ")"
+            )
+            .setParameter("id", perfilId)
+            .executeUpdate();
+
+            em.flush(); 
+
+         
+            em.createQuery(
+                "DELETE FROM Like l WHERE l.perfilOrigen.id = :id OR l.perfilDestino.id = :id"
+            )
+            .setParameter("id", perfilId)
+            .executeUpdate();
+
+            em.flush(); 
+
+          
+            em.remove(perfil);
+
+            em.getTransaction().commit();
+            return true;
+
+        } else {
+            em.getTransaction().rollback();
+            return false;
+        }
+
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+        e.printStackTrace();
+        return false;
+
+    } finally {
+        em.close();
+    }
+    }
+     //metodoPrueba
+    
     @Override
     public Perfil autenticar(String correo, String contrasena) {
         EntityManager em = JPAUtil.getEntityManager();
