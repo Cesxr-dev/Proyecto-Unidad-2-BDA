@@ -7,7 +7,7 @@ package dominio;
 
 /**
  *
- * @author demib
+ * @author demib 
  */
 public class Sesion {
     private static Perfil perfilActivo;
