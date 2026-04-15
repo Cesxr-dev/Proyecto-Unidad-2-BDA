@@ -28,7 +28,6 @@ public class CampusConnectMain {
         }
         
         BienvenidaFrm bienvenidaFrm = new BienvenidaFrm();
-        
     }
     
 }
