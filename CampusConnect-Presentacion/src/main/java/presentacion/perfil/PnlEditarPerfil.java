@@ -222,11 +222,21 @@ public class PnlEditarPerfil extends JPanel {
 
         // Carrera
         comboCarrera.setSelectedItem(perfilActual.getCarrera());
-
+        
         // Foto
         String rutaFoto = perfilActual.getFotoPerfil();
+
         if (rutaFoto != null && !rutaFoto.isEmpty()) {
-            pnlFoto.setImagen(rutaFoto);
+            if (rutaFoto.startsWith("/")) {
+                // imagen desde resources
+                java.net.URL url = getClass().getResource(rutaFoto);
+                if (url != null) {
+                    pnlFoto.setImagen(url.getPath());
+                }
+            } else {
+                // ruta absoluta
+                pnlFoto.setImagen(rutaFoto);
+            }
         }
 
         // Separar gustos, hobbies e intereses

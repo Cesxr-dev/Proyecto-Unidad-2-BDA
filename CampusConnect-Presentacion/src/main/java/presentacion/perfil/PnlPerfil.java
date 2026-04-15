@@ -193,8 +193,18 @@ public class PnlPerfil extends JPanel {
 
         // Foto
         String rutaFoto = perfilActual.getFotoPerfil();
+
         if (rutaFoto != null && !rutaFoto.isEmpty()) {
-            fotoPerfil.setImagen(rutaFoto);
+            if (rutaFoto.startsWith("/")) {
+                // imagen desde resources
+                java.net.URL url = getClass().getResource(rutaFoto);
+                if (url != null) {
+                    fotoPerfil.setImagen(url.getPath());
+                }
+            } else {
+                // ruta absoluta
+                fotoPerfil.setImagen(rutaFoto);
+            }
         }
 
         // Separar gustos, hobbies e intereses
