@@ -2,6 +2,8 @@
 package persistencia;
 
 import dominio.Perfil;
+import dominio.Sesion;
+
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
@@ -52,12 +54,19 @@ public class PerfilDAO implements IPerfilDAO {
     public Perfil buscarPorId(Long id, EntityManager em) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
+    
+    //Excluir al perfil logueado de la lista de perfiles a explorar 
     @Override
     public List<Perfil> listar(EntityManager em) {
-        return em.createQuery("SELECT p FROM Perfil p", Perfil.class)
-             .getResultList();
+        Long miId = Sesion.getPerfilActivo().getId();
+        return em.createQuery(
+            "SELECT DISTINCT p FROM Perfil p LEFT JOIN FETCH p.perfilInfoAdicional WHERE p.id <> :miId",
+            Perfil.class)
+                 .setParameter("miId", miId)
+                 .getResultList();
     }
+    
     
     
 }
