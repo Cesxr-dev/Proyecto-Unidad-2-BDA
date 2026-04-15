@@ -35,8 +35,6 @@ public class FrmBuscar extends javax.swing.JFrame {
     private PerfilService perfilService = new PerfilService();
     private LikeService likeService = new LikeService();
     
-
-
     /**
      * Creates new form FrmBuscar
      */
@@ -83,8 +81,22 @@ public class FrmBuscar extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setText("Explorar");
 
+        cerrarSesionBtn.setBackground(new java.awt.Color(245, 245, 245));
         cerrarSesionBtn.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        cerrarSesionBtn.setForeground(new java.awt.Color(204, 204, 204));
         cerrarSesionBtn.setText("<html>Cerrar<br>Sesión</html>");
+        cerrarSesionBtn.setBorder(null);
+        cerrarSesionBtn.setBorderPainted(false);
+        cerrarSesionBtn.setContentAreaFilled(false);
+        cerrarSesionBtn.setFocusPainted(false);
+        cerrarSesionBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cerrarSesionBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cerrarSesionBtnMouseExited(evt);
+            }
+        });
         cerrarSesionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cerrarSesionBtnActionPerformed(evt);
@@ -269,27 +281,36 @@ public class FrmBuscar extends javax.swing.JFrame {
 
     private void cerrarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBtnActionPerformed
         try {
-            JOptionPane.showConfirmDialog(this, 
-                    "Esta apunto de cerrar sesion ¿Desea continuar?", 
-                    "Cerrando sesion", 
-                    WIDTH);
-            
-            Sesion.cerrarSesion();
-            
-            InicioSesionFrm inicioSesion = new InicioSesionFrm();
-            inicioSesion.setVisible(true);
-            this.dispose();
+            int respuesta = JOptionPane.showConfirmDialog(this, 
+                "Está a punto de cerrar sesión. ¿Desea continuar?", 
+                "Cerrando sesión", 
+                JOptionPane.YES_NO_OPTION,  
+                JOptionPane.QUESTION_MESSAGE);
+        
+            if (respuesta == JOptionPane.YES_OPTION) {
+                Sesion.cerrarSesion();
+
+                InicioSesionFrm inicioSesion = new InicioSesionFrm();
+                inicioSesion.setVisible(true);
+                this.dispose();
+            }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Error: " + e.getMessage(),
                     "Error del Sistema",
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-        
-        
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
-    
-    
+
+    private void cerrarSesionBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseEntered
+        cerrarSesionBtn.setForeground(Color.decode("#0078C2"));
+    }//GEN-LAST:event_cerrarSesionBtnMouseEntered
+
+    private void cerrarSesionBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseExited
+        if (!cerrarSesionBtn.equals(btnActual)) {
+            cerrarSesionBtn.setForeground(Color.decode("#CCCCCC"));
+        }
+    }//GEN-LAST:event_cerrarSesionBtnMouseExited
     
     /**
      * @param args the command line arguments
@@ -337,12 +358,12 @@ public class FrmBuscar extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
     
-    
     private void seleccionarBtn(JButton btnActivo) {
         // Primero todos a gris
         btnBuscar.setForeground(Color.decode("#CCCCCC"));
         btnMatches.setForeground(Color.decode("#CCCCCC"));
         btnPerfil.setForeground(Color.decode("#CCCCCC"));
+        cerrarSesionBtn.setForeground(Color.decode("#CCCCCC"));
 
         // Solo el clickeado a azul
         btnActivo.setForeground(Color.decode("#0078C2"));
