@@ -35,12 +35,13 @@ public class FrmBuscar extends javax.swing.JFrame {
     private PerfilService perfilService = new PerfilService();
     private LikeService likeService = new LikeService();
     
-    //cambios para despliegue de pantalla perfil   
+    //cambios para despliegue de pantalla perfil     
     private presentacion.perfil.PnlPerfil pnlPerfil;
     private presentacion.perfil.PnlEditarPerfil pnlEditarPerfil;
     private presentacion.perfil.PnlPerfil.OnAccionListener perfilListener;
     private presentacion.perfil.PnlEditarPerfil.OnAccionListener editarListener; 
     //Fin
+
 
     /**
      * Creates new form FrmBuscar
@@ -58,7 +59,6 @@ public class FrmBuscar extends javax.swing.JFrame {
         
         
         //cambios para despliegue de pantalla perfil  
-
         // Crear listeners
         perfilListener = new presentacion.perfil.PnlPerfil.OnAccionListener() {
             @Override
@@ -87,8 +87,8 @@ public class FrmBuscar extends javax.swing.JFrame {
         // Crear paneles
         pnlPerfil = new presentacion.perfil.PnlPerfil(perfilListener);
         pnlEditarPerfil = new presentacion.perfil.PnlEditarPerfil(editarListener);
-        //Fin
 
+//Fin
 
     }
 
@@ -352,6 +352,7 @@ public class FrmBuscar extends javax.swing.JFrame {
             cerrarSesionBtn.setForeground(Color.decode("#CCCCCC"));
         }
     }//GEN-LAST:event_cerrarSesionBtnMouseExited
+    
     
     
     /**
