@@ -17,6 +17,8 @@ public class BienvenidaFrm extends javax.swing.JFrame {
      */
     public BienvenidaFrm() {
         initComponents();
+        
+        this.setVisible(true);
     }
 
     /**
