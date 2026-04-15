@@ -119,9 +119,9 @@ public class PnlPerfilCard extends JPanel {
             }
             @Override public void mouseExited(MouseEvent e) {
                 btnMeGusta.setBackground(COLOR_BTN_MEGUSTA);
-            }
+            }    
         });
-
+        
         // --- Botón No me interesa ---
         btnNoMeInteresa = crearBoton("No me interesa", COLOR_BTN_NO, COLOR_BTN_NO_TEXTO, COLOR_BTN_BORDE_NO);
         btnNoMeInteresa.addMouseListener(new MouseAdapter() {
@@ -227,8 +227,8 @@ public class PnlPerfilCard extends JPanel {
     // 
     public JButton getBtnMeGusta()      { return btnMeGusta; }
     public JButton getBtnNoMeInteresa() { return btnNoMeInteresa; }
-
     
+     
     // ACTUALIZAR DATOS DEL CARD
     
     public void actualizarPerfil(String nombre, String carrera, String intereses, String rutaImagen) {
