@@ -16,6 +16,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -263,9 +264,20 @@ public class PnlPerfilCard extends JPanel {
         private void cargarImagen() {
             if (ruta != null && !ruta.isEmpty()) {
                 try {
-                    imagen = ImageIO.read(new File(ruta));
+                    if (ruta.startsWith("/")) {
+                        // Imagen desde resources
+                        InputStream is = getClass().getResourceAsStream(ruta);
+                        if (is != null) {
+                            imagen = ImageIO.read(is);
+                        } else {
+                            imagen = null;
+                        }
+                    } else {
+                        // Imagen desde sistema
+                        imagen = ImageIO.read(new File(ruta));
+                    }
                 } catch (IOException e) {
-                    imagen = null; // si no carga, muestra placeholder
+                    imagen = null;
                 }
             }
         }
