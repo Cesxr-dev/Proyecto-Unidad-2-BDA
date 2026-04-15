@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import presentacion.inicioSesion.InicioSesionFrm;
+import servicios.LikeService;
 import servicios.PerfilService;
 
 /**
@@ -32,6 +33,8 @@ public class FrmBuscar extends javax.swing.JFrame {
     private List<Perfil> perfiles;
     private int indiceActual = 0;
     private PerfilService perfilService = new PerfilService();
+    private LikeService likeService = new LikeService();
+    
 
 
     /**
@@ -286,6 +289,8 @@ public class FrmBuscar extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
     
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -387,17 +392,40 @@ public class FrmBuscar extends javax.swing.JFrame {
             perfil.getFotoPerfil() 
         );
 
+        
         //  Boton Me Gusta
         pnlPerfilCard.getBtnMeGusta().addActionListener(e -> {
+            
+            Perfil perfilOrigen = Sesion.getPerfilActivo();
+            
+            
+            boolean hayMatch = likeService.enviarLike(perfilOrigen, perfil, true); // Si le gusto
+            
+            if(hayMatch){
+                JOptionPane.showMessageDialog(this,
+                "¡Es un match con " + perfil.getNombre() + "!",
+                "¡Match!",
+                JOptionPane.INFORMATION_MESSAGE);
+            }
+            
             System.out.println("Le gusto: " + perfil.getNombre());
+            
+            
             
             indiceActual++;
             mostrarPerfilActual();
         });
+        
 
         // Boton No me interesa
         pnlPerfilCard.getBtnNoMeInteresa().addActionListener(e -> {
+            Perfil perfilOrigen = Sesion.getPerfilActivo();
+            
+            
+            likeService.enviarLike(perfilOrigen, perfil, false); // No le gusto
+            
             System.out.println("No le intereso: " + perfil.getNombre());
+            
             indiceActual++;
             mostrarPerfilActual();
         });
