@@ -288,6 +288,7 @@ public class FrmBuscar extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         seleccionarBtn(btnBuscar);
+        jLabel1.setText("Explorar");
         mostrarPerfilActual();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -305,6 +306,7 @@ public class FrmBuscar extends javax.swing.JFrame {
     private void btnMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchesActionPerformed
         // TODO add your handling code here:
         seleccionarBtn(btnMatches);
+        mostrarVistaMatches();
     }//GEN-LAST:event_btnMatchesActionPerformed
 
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
@@ -573,6 +575,127 @@ private void eliminarCuenta() {
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
+}
+
+
+private void mostrarVistaMatches(){
+    pnlMain.removeAll();
+    jLabel1.setText("Matches");
+    
+    Perfil perfilActivo = dominio.Sesion.getPerfilActivo();
+    List<dominio.Match> matches = new servicios.MatchService(
+            new persistencia.MatchDAO()).obtenerMatchesDePerfil(perfilActivo);
+
+    if (matches == null || matches.isEmpty()) {
+        JLabel lbl = new JLabel("Aún no tienes matches", SwingConstants.CENTER);
+        lbl.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lbl.setForeground(Color.decode("#888888"));
+        pnlMain.add(lbl, BorderLayout.CENTER);
+    } else {
+        // Panel lista con scroll
+        javax.swing.JPanel pnlLista = new javax.swing.JPanel();
+        pnlLista.setLayout(new javax.swing.BoxLayout(pnlLista, javax.swing.BoxLayout.Y_AXIS));
+        pnlLista.setBackground(Color.decode("#F5F5F5"));
+
+        for (dominio.Match match : matches) {
+            // Determinar cuál perfil es "el otro"
+            Perfil otro = match.getLikeA().getPerfilOrigen().getId().equals(perfilActivo.getId())
+                ? match.getLikeB().getPerfilOrigen()
+                : match.getLikeA().getPerfilOrigen();
+
+            pnlLista.add(crearCardMatch(otro));
+            pnlLista.add(javax.swing.Box.createVerticalStrut(1));
+        }
+
+        javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(pnlLista);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(12);
+        pnlMain.add(scroll, BorderLayout.CENTER);
+    }
+
+    pnlMain.revalidate();
+    pnlMain.repaint();
+}
+
+private javax.swing.JPanel crearCardMatch(Perfil otro) {
+    javax.swing.JPanel card = new javax.swing.JPanel(new BorderLayout(12, 0));
+    card.setBackground(Color.WHITE);
+    card.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+        javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Color.decode("#EEEEEE")),
+        javax.swing.BorderFactory.createEmptyBorder(12, 16, 12, 16)
+    ));
+    card.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 72));
+
+    // Foto circular
+    javax.swing.JLabel lblFoto = new javax.swing.JLabel() {
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
+                                java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+            // Intenta cargar la foto, si no pone placeholder
+            java.awt.image.BufferedImage img = null;
+            if (otro.getFotoPerfil() != null && !otro.getFotoPerfil().isEmpty()) {
+                try { img = javax.imageio.ImageIO.read(new java.io.File(otro.getFotoPerfil())); }
+                catch (Exception ex) { img = null; }
+            }
+            if (img != null) {
+                g2.setClip(new java.awt.geom.Ellipse2D.Float(0, 0, getWidth(), getHeight()));
+                g2.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+            } else {
+                g2.setColor(Color.decode("#CCCCCC"));
+                g2.fillOval(0, 0, getWidth(), getHeight());
+                g2.setColor(Color.WHITE);
+                g2.setFont(new Font("SansSerif", Font.BOLD, 18));
+                java.awt.FontMetrics fm = g2.getFontMetrics();
+                String inicial = otro.getNombre() != null ? 
+                    String.valueOf(otro.getNombre().charAt(0)).toUpperCase() : "?";
+                g2.drawString(inicial,
+                    (getWidth()  - fm.stringWidth(inicial)) / 2,
+                    (getHeight() + fm.getAscent() - fm.getDescent()) / 2);
+            }
+            g2.dispose();
+        }
+    };
+    lblFoto.setPreferredSize(new java.awt.Dimension(48, 48));
+    lblFoto.setMinimumSize(new java.awt.Dimension(48, 48));
+    lblFoto.setMaximumSize(new java.awt.Dimension(48, 48));
+
+    // Info nombre + carrera
+    JLabel lblNombre = new JLabel(otro.getNombre());
+    lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+    lblNombre.setForeground(Color.decode("#222222"));
+
+    JLabel lblCarrera = new JLabel(otro.getCarrera().toString());
+    lblCarrera.setFont(new Font("SansSerif", Font.PLAIN, 12));
+    lblCarrera.setForeground(Color.decode("#888888"));
+
+    javax.swing.JPanel pnlInfo = new javax.swing.JPanel(new java.awt.GridLayout(2, 1, 0, 2));
+    pnlInfo.setOpaque(false);
+    pnlInfo.add(lblNombre);
+    pnlInfo.add(lblCarrera);
+
+    // Ícono de match (corazón)
+    JLabel lblIcono = new JLabel("♥");
+    lblIcono.setFont(new Font("SansSerif", Font.PLAIN, 18));
+    lblIcono.setForeground(Color.decode("#0078C2"));
+
+    card.add(lblFoto,   BorderLayout.WEST);
+    card.add(pnlInfo,   BorderLayout.CENTER);
+    card.add(lblIcono,  BorderLayout.EAST);
+
+    // Hover
+    card.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override public void mouseEntered(java.awt.event.MouseEvent e) {
+            card.setBackground(Color.decode("#F0F7FF"));
+        }
+        @Override public void mouseExited(java.awt.event.MouseEvent e) {
+            card.setBackground(Color.WHITE);
+        }
+    });
+
+    return card;
+    
 }
     
 }
