@@ -6,6 +6,7 @@ package presentacion.inicioSesion;
 /* PANTALLA DE PRUEBA UTILIZADA PARA CHECAR QUE AL INICIAR SESION SE DIRIJA A LA SIG PANTALLA (FUNCIONAL)
 import SiguientePantallaPrueba.SiguientePantallaPruebaFrm;
 */
+import dominio.Sesion;
 import presentacion.registroPanel.RegistroUsuarioFrm;
 import jakarta.persistence.EntityManager;
 import presentacion.bienvenida.BienvenidaFrm;
@@ -221,6 +222,8 @@ public class InicioSesionFrm extends javax.swing.JFrame {
             dominio.Perfil perfilAutenticado = perfilService.autenticar(correo, contrasena);
 
             if (perfilAutenticado != null) {
+                //Linea para identificar al perfil activo y para su uso posterior
+                Sesion.setPerfilActivo(perfilAutenticado);
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Bienvenido " + perfilAutenticado.getNombre() + "!",
                         "Exito",
@@ -229,10 +232,11 @@ public class InicioSesionFrm extends javax.swing.JFrame {
                
                     presentacion.homepagePanel.FrmBuscar homePage = new presentacion.homepagePanel.FrmBuscar();
                     homePage.setVisible(true);
+                    this.dispose();
                     
                 
 
-                this.dispose();
+                
             } else {
                 EntityManager em = utils.JPAUtil.getEntityManager();
                 try {

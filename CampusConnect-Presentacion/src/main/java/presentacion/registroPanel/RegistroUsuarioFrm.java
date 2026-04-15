@@ -156,8 +156,8 @@ public class RegistroUsuarioFrm extends javax.swing.JFrame {
                     "Registro exitoso",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             
-            presentacion.homepagePanel.FrmBuscar homePage = new presentacion.homepagePanel.FrmBuscar();
-            homePage.setVisible(true);
+            presentacion.inicioSesion.InicioSesionFrm inicioSesionFrm = new presentacion.inicioSesion.InicioSesionFrm();
+            inicioSesionFrm.setVisible(true);
             this.dispose();
         }
 
