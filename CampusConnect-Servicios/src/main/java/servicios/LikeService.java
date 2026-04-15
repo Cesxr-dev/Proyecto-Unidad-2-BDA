@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 import persistencia.ILikeDAO;
+import persistencia.LikeDAO;
 import utils.JPAUtil;
 
 /**
@@ -22,8 +23,8 @@ public class LikeService implements ILikeService {
 
     private ILikeDAO likeDAO;
 
-    public LikeService(ILikeDAO likeDAO) {
-        this.likeDAO = likeDAO;
+    public LikeService() {
+        this.likeDAO = new LikeDAO();
     }
 
     private void validarLike(Like like) {
