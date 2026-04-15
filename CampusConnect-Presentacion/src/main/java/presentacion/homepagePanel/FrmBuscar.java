@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package presentacion.homepagePanel;
 
 import dominio.InfoAdicional;
@@ -18,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import presentacion.inicioSesion.InicioSesionFrm;
 import servicios.LikeService;
 import servicios.PerfilService;
 
@@ -109,6 +107,7 @@ public class FrmBuscar extends javax.swing.JFrame {
 
         pnlHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        cerrarSesionBtn = new javax.swing.JButton();
         pnlMain = new javax.swing.JPanel();
         pnlBottom = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
@@ -126,8 +125,29 @@ public class FrmBuscar extends javax.swing.JFrame {
         pnlHeader.setPreferredSize(new java.awt.Dimension(390, 50));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Explorar");
+
+        cerrarSesionBtn.setBackground(new java.awt.Color(245, 245, 245));
+        cerrarSesionBtn.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        cerrarSesionBtn.setForeground(new java.awt.Color(204, 204, 204));
+        cerrarSesionBtn.setText("<html>Cerrar<br>Sesión</html>");
+        cerrarSesionBtn.setBorder(null);
+        cerrarSesionBtn.setBorderPainted(false);
+        cerrarSesionBtn.setContentAreaFilled(false);
+        cerrarSesionBtn.setFocusPainted(false);
+        cerrarSesionBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cerrarSesionBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cerrarSesionBtnMouseExited(evt);
+            }
+        });
+        cerrarSesionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -136,11 +156,13 @@ public class FrmBuscar extends javax.swing.JFrame {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(156, 156, 156)
                 .addComponent(jLabel1)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnlHeader, java.awt.BorderLayout.NORTH);
@@ -301,7 +323,39 @@ public class FrmBuscar extends javax.swing.JFrame {
         seleccionarBtn(btnPerfil);
         mostrarPanelPerfil(); 
     }//GEN-LAST:event_btnPerfilActionPerformed
-    
+
+    private void cerrarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBtnActionPerformed
+        try {
+            int respuesta = JOptionPane.showConfirmDialog(this, 
+                "Está a punto de cerrar sesión. ¿Desea continuar?", 
+                "Cerrando sesión", 
+                JOptionPane.YES_NO_OPTION,  
+                JOptionPane.QUESTION_MESSAGE);
+        
+            if (respuesta == JOptionPane.YES_OPTION) {
+                Sesion.cerrarSesion();
+
+                InicioSesionFrm inicioSesion = new InicioSesionFrm();
+                inicioSesion.setVisible(true);
+                this.dispose();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(),
+                    "Error del Sistema",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_cerrarSesionBtnActionPerformed
+
+    private void cerrarSesionBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseEntered
+        cerrarSesionBtn.setForeground(Color.decode("#0078C2"));
+    }//GEN-LAST:event_cerrarSesionBtnMouseEntered
+
+    private void cerrarSesionBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseExited
+        if (!cerrarSesionBtn.equals(btnActual)) {
+            cerrarSesionBtn.setForeground(Color.decode("#CCCCCC"));
+        }
+    }//GEN-LAST:event_cerrarSesionBtnMouseExited
     
     
     
@@ -345,18 +399,19 @@ public class FrmBuscar extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnMatches;
     private javax.swing.JButton btnPerfil;
+    private javax.swing.JButton cerrarSesionBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel pnlBottom;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
     
-    
     private void seleccionarBtn(JButton btnActivo) {
         // Primero todos a gris
         btnBuscar.setForeground(Color.decode("#CCCCCC"));
         btnMatches.setForeground(Color.decode("#CCCCCC"));
         btnPerfil.setForeground(Color.decode("#CCCCCC"));
+        cerrarSesionBtn.setForeground(Color.decode("#CCCCCC"));
 
         // Solo el clickeado a azul
         btnActivo.setForeground(Color.decode("#0078C2"));
