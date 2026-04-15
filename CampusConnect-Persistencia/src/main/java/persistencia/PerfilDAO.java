@@ -61,7 +61,11 @@ public class PerfilDAO implements IPerfilDAO {
     public List<Perfil> listar(EntityManager em) {
         Long miId = Sesion.getPerfilActivo().getId();
         return em.createQuery(
-            "SELECT DISTINCT p FROM Perfil p LEFT JOIN FETCH p.perfilInfoAdicional WHERE p.id <> :miId",
+            "SELECT DISTINCT p FROM Perfil p LEFT JOIN FETCH p.perfilInfoAdicional " +
+            "WHERE p.id <> :miId" +
+            " AND p.id NOT IN (" +
+            "   SELECT l.perfilDestino.id FROM Like l WHERE l.perfilOrigen.id = :miId" +
+            ")",
             Perfil.class)
                  .setParameter("miId", miId)
                  .getResultList();
