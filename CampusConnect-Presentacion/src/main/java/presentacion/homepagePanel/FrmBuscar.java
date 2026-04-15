@@ -37,7 +37,12 @@ public class FrmBuscar extends javax.swing.JFrame {
     private PerfilService perfilService = new PerfilService();
     private LikeService likeService = new LikeService();
     
-
+//cambios para despliegue de pantalla perfil   
+    private presentacion.perfil.PnlPerfil pnlPerfil;
+    private presentacion.perfil.PnlEditarPerfil pnlEditarPerfil;
+    private presentacion.perfil.PnlPerfil.OnAccionListener perfilListener;
+    private presentacion.perfil.PnlEditarPerfil.OnAccionListener editarListener; 
+//Fin
 
     /**
      * Creates new form FrmBuscar
@@ -52,6 +57,45 @@ public class FrmBuscar extends javax.swing.JFrame {
         seleccionarBtn(btnBuscar);
         
         configurarPnlMain();
+        
+        
+//cambios para despliegue de pantalla perfil  
+
+        // Crear listeners
+        perfilListener = new presentacion.perfil.PnlPerfil.OnAccionListener() {
+            @Override
+            public void onEditar() {
+                mostrarPanelEdicion();
+            }
+
+            @Override
+            public void onEliminar() {
+                eliminarCuenta();
+            }
+        };
+
+        editarListener = new presentacion.perfil.PnlEditarPerfil.OnAccionListener() {
+            @Override
+            public void onGuardar() {
+                mostrarPanelPerfil();
+            }
+
+            @Override
+            public void onCancelar() {
+                mostrarPanelPerfil();
+            }
+        };
+
+        // Crear paneles
+        pnlPerfil = new presentacion.perfil.PnlPerfil(perfilListener);
+        pnlEditarPerfil = new presentacion.perfil.PnlEditarPerfil(editarListener);
+
+
+   
+
+//Fin
+
+
     }
 
     /**
@@ -122,7 +166,6 @@ public class FrmBuscar extends javax.swing.JFrame {
 
         btnBuscar.setBackground(new java.awt.Color(245, 245, 245));
         btnBuscar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(204, 204, 204));
         btnBuscar.setText("Buscar");
         btnBuscar.setBorder(null);
         btnBuscar.setBorderPainted(false);
@@ -144,7 +187,6 @@ public class FrmBuscar extends javax.swing.JFrame {
 
         btnMatches.setBackground(new java.awt.Color(245, 245, 245));
         btnMatches.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnMatches.setForeground(new java.awt.Color(204, 204, 204));
         btnMatches.setText("Matches");
         btnMatches.setBorder(null);
         btnMatches.setBorderPainted(false);
@@ -166,7 +208,6 @@ public class FrmBuscar extends javax.swing.JFrame {
 
         btnPerfil.setBackground(new java.awt.Color(245, 245, 245));
         btnPerfil.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnPerfil.setForeground(new java.awt.Color(204, 204, 204));
         btnPerfil.setText("Perfil");
         btnPerfil.setBorder(null);
         btnPerfil.setBorderPainted(false);
@@ -225,6 +266,7 @@ public class FrmBuscar extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         seleccionarBtn(btnBuscar);
+        mostrarPerfilActual();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnMatchesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatchesMouseEntered
@@ -257,7 +299,9 @@ public class FrmBuscar extends javax.swing.JFrame {
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         // TODO add your handling code here:
         seleccionarBtn(btnPerfil);
+        mostrarPanelPerfil(); 
     }//GEN-LAST:event_btnPerfilActionPerformed
+    
     
     
     
@@ -404,4 +448,76 @@ public class FrmBuscar extends javax.swing.JFrame {
         pnlMain.revalidate();
         pnlMain.repaint();
     }
+    
+    
+    //cambios para despliegue de pantalla perfil  
+    /**
+ * Muestra el panel de visualización del perfil
+ */
+private void mostrarPanelPerfil() {
+    pnlMain.removeAll();
+    pnlMain.add(pnlPerfil, java.awt.BorderLayout.CENTER);
+    pnlPerfil.actualizarDatos(); // Actualizar con datos más recientes
+    pnlMain.revalidate();
+    pnlMain.repaint();
+}
+ 
+/**
+ * Muestra el panel de edición del perfil
+ */
+private void mostrarPanelEdicion() {
+    pnlMain.removeAll();
+    pnlMain.add(pnlEditarPerfil, java.awt.BorderLayout.CENTER);
+    pnlMain.revalidate();
+    pnlMain.repaint();
+}
+ 
+/**
+ * Elimina la cuenta del usuario actual
+ */
+private void eliminarCuenta() {
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(this,
+            "¿Estás seguro de que deseas eliminar tu cuenta?\n" +
+            "Esta acción es irreversible y se eliminarán todos tus datos.",
+            "Confirmar eliminación de cuenta",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+    
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+        try {
+            Long idPerfil = dominio.Sesion.getPerfilActivo().getId();
+            
+            servicios.PerfilService perfilService = new servicios.PerfilService();
+            boolean eliminado = perfilService.eliminar2(idPerfil);
+            
+            if (eliminado) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Tu cuenta ha sido eliminada exitosamente.",
+                        "Cuenta eliminada",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                
+                // Cerrar sesión
+                dominio.Sesion.cerrarSesion();
+                
+                // Volver al login
+                presentacion.inicioSesion.InicioSesionFrm loginFrame = 
+                    new presentacion.inicioSesion.InicioSesionFrm();
+                loginFrame.setVisible(true);
+                
+                this.dispose();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Error al eliminar la cuenta. Intenta de nuevo.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(),
+                    "Error del Sistema",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+    
 }

@@ -10,6 +10,9 @@ import dominio.Perfil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -115,6 +118,15 @@ public class LikeDAO implements ILikeDAO {
                 Like.class)
                 .setParameter("origen", origen)
                 .getResultList();
+    }
+    
+    
+    public void eliminarPorPerfil(Long idPerfil, EntityManager em) {
+        em.createQuery(
+                "DELETE FROM Like l WHERE l.perfilOrigen.id = :id OR l.perfilDestino.id = :id"
+        )
+                .setParameter("id", idPerfil)
+                .executeUpdate();
     }
 
 }
