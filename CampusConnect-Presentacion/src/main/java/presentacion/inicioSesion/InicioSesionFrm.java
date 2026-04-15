@@ -54,16 +54,14 @@ public class InicioSesionFrm extends javax.swing.JFrame {
 
         fondoPnl.setBackground(new java.awt.Color(0, 120, 194));
         fondoPnl.setForeground(new java.awt.Color(0, 120, 194));
+        fondoPnl.setPreferredSize(new java.awt.Dimension(390, 720));
 
         pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
         pnlHeader.setMaximumSize(null);
 
         inicioSesionHeaderLbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        inicioSesionHeaderLbl.setForeground(new java.awt.Color(0, 0, 0));
         inicioSesionHeaderLbl.setText("Inicio de Sesión");
 
-        regresarBtn.setBackground(new java.awt.Color(255, 255, 255));
-        regresarBtn.setForeground(new java.awt.Color(0, 0, 0));
         regresarBtn.setText("<-");
         regresarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,13 +107,10 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         correoTxt.setBackground(new java.awt.Color(249, 249, 249));
 
         correoLbl.setBackground(new java.awt.Color(0, 0, 0));
-        correoLbl.setForeground(new java.awt.Color(0, 0, 0));
         correoLbl.setText("Correo:");
 
-        ContrasenaLbl.setForeground(new java.awt.Color(0, 0, 0));
         ContrasenaLbl.setText("Contraseña:");
 
-        registrarseBtn.setBackground(new java.awt.Color(255, 255, 255));
         registrarseBtn.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         registrarseBtn.setForeground(new java.awt.Color(0, 51, 255));
         registrarseBtn.setText("<html><u>¿Aún no tienes cuenta? Regístrate</u></html>");
@@ -133,7 +128,6 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         });
 
         inisioSesionLbl.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        inisioSesionLbl.setForeground(new java.awt.Color(0, 0, 0));
         inisioSesionLbl.setText("Inicio de Sesión");
 
         javax.swing.GroupLayout camposPnlLayout = new javax.swing.GroupLayout(camposPnl);
@@ -156,21 +150,21 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         camposPnlLayout.setVerticalGroup(
             camposPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(camposPnlLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(inisioSesionLbl)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(correoLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(correoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(ContrasenaLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(contrasenaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(iniciarSesionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
                 .addComponent(registrarseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout fondoPnlLayout = new javax.swing.GroupLayout(fondoPnl);
@@ -190,12 +184,12 @@ public class InicioSesionFrm extends javax.swing.JFrame {
         fondoPnlLayout.setVerticalGroup(
             fondoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fondoPnlLayout.createSequentialGroup()
-                .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(camposPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         getContentPane().add(fondoPnl, java.awt.BorderLayout.CENTER);
